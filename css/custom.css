@@ -1,0 +1,375 @@
+/* custom.css */
+
+code {
+    color: black;
+}
+
+article img,
+article .video,
+img.about {
+    border-radius: 0.3em;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border: 0.5em solid #fff;
+}
+
+.right {
+    float: right;
+    margin-left: 1.5em;
+}
+
+.left {
+    float: left;
+    margin-right: 1.5em;
+}
+
+/* When highlighted code blocks are too wide, they wrap. Resulting in the */
+/* line numbers column's rows not lining up with the code rows. Prevent */
+/* wrapping. */
+pre {
+    white-space: pre;
+    width: inherit;
+}
+
+html {
+    background-image: url('/img/line-tile.png');
+    background-repeat: repeat, repeat;
+    background-color: #f2f2f2;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: "PT Serif", Georgia, serif;
+}
+
+body {
+    max-width: 1200px;
+    position: relative;
+    margin: 0px auto;
+    font-size: 18px;
+    color: #222;
+    border-left: solid 1px #bababa;
+    border-right: solid 1px #dadada;
+
+    background-color: #f8f8f8;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC');
+    background-repeat: repeat-x;
+    background-attachment: scroll;
+    background-position: left top;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+}
+
+p {
+    line-height: 28px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    color: inherit;
+}
+
+article > header,
+article p,
+table.sourcetable {
+    margin-bottom: 1.5em;
+}
+
+
+h2 {
+    font-size: 28px;
+}
+
+header.blog-title {
+    background-color: #284b5f;
+}
+
+header.navbar {
+    background-image: url('/img/noise.png'), linear-gradient(#eeeeff, #a0e0ff);
+    background-repeat: repeat, repeat;
+    background-color: transparent;
+    border-top: solid 1px white;
+    border-bottom: solid 1px #80c0ef;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    font-family: "Helvetica Neue", Helvetica, swiss;
+}
+
+.navbar-inverse .navbar-brand, .navbar-header a, .navbar-inverse .navbar-nav > li > a {
+    color: #7b7b7b;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:active,
+.navbar-inverse .navbar-brand:focus,
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:active,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #5b5b5b;
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a:hover > b.caret {
+    border-top-color: #5b5b5b;
+    border-bottom-color: #5b5b5b;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:visited,
+.navbar-inverse .navbar-nav > .active > a:active,
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:visited, 
+.navbar-inverse .navbar-nav > .open > a:active {
+    background-color: #284b5f;
+}
+
+.navbar-inverse .navbar-nav > .open > a:hover > b.caret {
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+}
+
+body > .container > footer {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+#content {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#about,
+#content > h1 {
+    padding-top: 1.5em;
+}
+
+article > header {
+    position: relative;
+    padding-top: 2em;
+}
+
+article > header > h1 {
+    margin: 0;
+}
+
+article > header > .index-date {
+    font-family: "PT Sans", Verdana, sans-serif;
+    font-size: 0.9em;
+    color: #aaa;
+    text-transform: uppercase;
+    position: absolute;
+    top: 0px;
+}
+
+article {
+    padding-top: 2em;
+}
+
+/*
+article + article {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC') repeat-x scroll left top transparent;
+}
+*/
+
+.post-metadata {
+    font-family: "PT Sans", Verdana, sans-serif;
+    font-size: 0.85em;
+}
+
+.post-metadata a {
+    text-decoration: underline;
+}
+
+article.index-post {
+    margin-bottom: 2em;
+}
+
+article.index-post > header > h1 {
+    font-size: 40px;
+}
+
+article.blog-post > header > h1 {
+    font-size: 48px;
+}
+
+.pager em {
+    font-family: "PT Sans", Verdana, sans-serif;
+    font-size: 0.85em;
+    font-style: normal;
+}
+
+header.navbar .container, header.blog-title {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+header.navbar {
+    margin-bottom: 0px;
+}
+
+body > .container > footer {
+    color: #999;
+    font-size: 75%;
+    padding-bottom: 1em;
+}
+
+header.blog-title {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+header.blog-title h1 {
+    font-size: 52px;
+    font-weight: normal;
+}
+
+header.blog-title h2 {
+    font-size: 24px;
+    font-weight: normal;
+    color: #aaa;
+}
+
+header.blog-title h1 a {
+    color: #f2f2f2;
+    text-decoration: none;
+}
+
+p code {
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 0.4em;
+    padding: 0px 0.3em;
+    line-height: 1.5em;
+    font-size: 0.8em;
+    background-color: #fff;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+code, pre {
+    font-family: Menlo, 'Andale Mono', Monaco, 'Lucida Console', 'Courier New', monospace;
+}
+
+table.sourcetable pre {
+    border: none;
+}
+
+table.sourcetable pre {
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    background: none;
+}
+
+table.sourcetable td.linenos {
+    background-color: rgb(7, 54, 66);
+}
+
+table.sourcetable td.linenos pre {
+    color: #586e75;
+}
+
+/*
+table.sourcetable pre {
+    color: #93a1a1;
+}
+*/
+
+/* Solarized Dark 
+
+For use with Jekyll and Pygments
+
+http://ethanschoonover.com/solarized
+
+SOLARIZED HEX      ROLE
+--------- -------- ------------------------------------------
+base03    #002b36  background
+base01    #586e75  comments / secondary content
+base1     #93a1a1  body text / default code / primary content
+orange    #cb4b16  constants
+red       #dc322f  regex, special keywords
+blue      #268bd2  reserved keywords
+cyan      #2aa198  strings, numbers
+green     #859900  operators, other keywords
+*/
+
+table.sourcetable td.code {
+    background-color: #002b36;
+}
+
+.source { background-color: #002b36; color: #93a1a1 }
+.source .c { color: #586e75 } /* Comment */
+.source .err { color: #93a1a1 } /* Error */
+.source .g { color: #93a1a1 } /* Generic */
+.source .k { color: #859900 } /* Keyword */
+.source .l { color: #93a1a1 } /* Literal */
+.source .n { color: #93a1a1 } /* Name */
+.source .o { color: #859900 } /* Operator */
+.source .x { color: #cb4b16 } /* Other */
+.source .p { color: #93a1a1 } /* Punctuation */
+.source .cm { color: #586e75 } /* Comment.Multiline */
+.source .cp { color: #859900 } /* Comment.Preproc */
+.source .c1 { color: #586e75 } /* Comment.Single */
+.source .cs { color: #859900 } /* Comment.Special */
+.source .gd { color: #2aa198 } /* Generic.Deleted */
+.source .ge { color: #93a1a1; font-style: italic } /* Generic.Emph */
+.source .gr { color: #dc322f } /* Generic.Error */
+.source .gh { color: #cb4b16 } /* Generic.Heading */
+.source .gi { color: #859900 } /* Generic.Inserted */
+.source .go { color: #93a1a1 } /* Generic.Output */
+.source .gp { color: #93a1a1 } /* Generic.Prompt */
+.source .gs { color: #93a1a1; font-weight: bold } /* Generic.Strong */
+.source .gu { color: #cb4b16 } /* Generic.Subheading */
+.source .gt { color: #93a1a1 } /* Generic.Traceback */
+.source .kc { color: #cb4b16 } /* Keyword.Constant */
+.source .kd { color: #268bd2 } /* Keyword.Declaration */
+.source .kn { color: #859900 } /* Keyword.Namespace */
+.source .kp { color: #859900 } /* Keyword.Pseudo */
+.source .kr { color: #268bd2 } /* Keyword.Reserved */
+.source .kt { color: #dc322f } /* Keyword.Type */
+.source .ld { color: #93a1a1 } /* Literal.Date */
+.source .m { color: #2aa198 } /* Literal.Number */
+.source .s { color: #2aa198 } /* Literal.String */
+.source .na { color: #93a1a1 } /* Name.Attribute */
+.source .nb { color: #B58900 } /* Name.Builtin */
+.source .nc { color: #268bd2 } /* Name.Class */
+.source .no { color: #cb4b16 } /* Name.Constant */
+.source .nd { color: #268bd2 } /* Name.Decorator */
+.source .ni { color: #cb4b16 } /* Name.Entity */
+.source .ne { color: #cb4b16 } /* Name.Exception */
+.source .nf { color: #268bd2 } /* Name.Function */
+.source .nl { color: #93a1a1 } /* Name.Label */
+.source .nn { color: #93a1a1 } /* Name.Namespace */
+.source .nx { color: #93a1a1 } /* Name.Other */
+.source .py { color: #93a1a1 } /* Name.Property */
+.source .nt { color: #268bd2 } /* Name.Tag */
+.source .nv { color: #268bd2 } /* Name.Variable */
+.source .ow { color: #859900 } /* Operator.Word */
+.source .w { color: #93a1a1 } /* Text.Whitespace */
+.source .mf { color: #2aa198 } /* Literal.Number.Float */
+.source .mh { color: #2aa198 } /* Literal.Number.Hex */
+.source .mi { color: #2aa198 } /* Literal.Number.Integer */
+.source .mo { color: #2aa198 } /* Literal.Number.Oct */
+.source .sb { color: #586e75 } /* Literal.String.Backtick */
+.source .sc { color: #2aa198 } /* Literal.String.Char */
+.source .sd { color: #93a1a1 } /* Literal.String.Doc */
+.source .s2 { color: #2aa198 } /* Literal.String.Double */
+.source .se { color: #cb4b16 } /* Literal.String.Escape */
+.source .sh { color: #93a1a1 } /* Literal.String.Heredoc */
+.source .si { color: #2aa198 } /* Literal.String.Interpol */
+.source .sx { color: #2aa198 } /* Literal.String.Other */
+.source .sr { color: #dc322f } /* Literal.String.Regex */
+.source .s1 { color: #2aa198 } /* Literal.String.Single */
+.source .ss { color: #2aa198 } /* Literal.String.Symbol */
+.source .bp { color: #268bd2 } /* Name.Builtin.Pseudo */
+.source .vc { color: #268bd2 } /* Name.Variable.Class */
+.source .vg { color: #268bd2 } /* Name.Variable.Global */
+.source .vi { color: #268bd2 } /* Name.Variable.Instance */
+.source .il { color: #2aa198 } /* Literal.Number.Integer.Long */
+
