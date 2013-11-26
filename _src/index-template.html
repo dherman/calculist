@@ -1,0 +1,28 @@
+@(define *months* (vector "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"))
+@(define *suffixes* (vector "st" "nd" "rd" "th" "th" "th" "th" "th" "th" "th"
+                            "th" "th" "th" "th" "th" "th" "th" "th" "th" "th"
+                            "st" "nd" "rd" "th" "th" "th" "th" "th" "th" "th"
+                            "31"))
+
+@(define (pretty-date d)
+   (cond
+     [(regexp-match #px"([\\d]{4})-([\\d]{2})-([\\d]{2})" d)
+      => (lambda (matches)
+           (let ([y (string->number (cadr matches))]
+                 [m (string->number (caddr matches))]
+                 [d (string->number (cadddr matches))])
+             (string-append (vector-ref *months* (sub1 m))
+                            " "
+                            (number->string d)
+                            (vector-ref *suffixes* (sub1 d))
+                            ", "
+                            (number->string y))))]
+     [else d]))
+
+<article class="index-post">
+  <header>
+    <h1><a href='@|uri-path|'>@|title|</a></h1>
+    <p class='index-date'>@(pretty-date date)</p>
+  </header>
+  @|content|
+</article>
