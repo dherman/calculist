@@ -15,9 +15,7 @@ publish:
 	mv $(PUBLISHED_DIRS) $(PUBLISHED_FILES) _build/
 	git checkout gh-pages
 	rm -rf $(PUBLISHED_DIRS)
-	cd _build
-	mv * ../
-	cd ..
+	mv _build/* ./
 	rmdir _build
 	git status --porcelain | fgrep '??' | awk '{ print $2; }' | grep -E '^(blog|feeds|tags)/' | xargs git add
 	git commit -a -m 'new post'
