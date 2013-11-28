@@ -1,34 +1,15 @@
-@(define *months* (vector "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"))
-@(define *suffixes* (vector "st" "nd" "rd" "th" "th" "th" "th" "th" "th" "th"
-                            "th" "th" "th" "th" "th" "th" "th" "th" "th" "th"
-                            "st" "nd" "rd" "th" "th" "th" "th" "th" "th" "th"
-                            "31"))
-
-@(define (pretty-date d)
-   (cond
-     [(regexp-match #px"([\\d]{4})-([\\d]{2})-([\\d]{2})" d)
-      => (lambda (matches)
-           (let ([y (string->number (cadr matches))]
-                 [m (string->number (caddr matches))]
-                 [d (string->number (cadddr matches))])
-             (string-append (vector-ref *months* (sub1 m))
-                            " "
-                            (number->string d)
-                            (vector-ref *suffixes* (sub1 d))
-                            ", "
-                            (number->string y))))]
-     [else d]))
+@(local-require (file "../_util/date-format.rkt"))
 
 <article class="blog-post">
   <header>
     <h1>@|title|</h1>
-    <p class='index-date'>@(pretty-date date)</p>
+    <p class='index-date'>@(pretty-date date-struct)</p>
   </header>
   @|content|
   <footer>
     <p class="post-metadata">
     Posted by Dave Herman &bullet;
-    @(pretty-date date) &bullet;
+    @(pretty-date date-struct) &bullet;
     @|tags|
     </p>
     <hr />
