@@ -6,7 +6,7 @@
 - [sweet.js](http://sweetjs.org)
 - [asm.js](http://asmjs.org)
 - [Rust](http://www.rust-lang.org)
-- [Servo](https://github.com/servo/servo/)
+- [Servo](https://github.com/servo/servo)
 - [Shumway](https://github.com/mozilla/shumway)
 
 I also participate in open standards, in particular as a representative on [TC39](http://www.ecma-international.org/memento/TC39.htm), the committee that standardizes JavaScript.
