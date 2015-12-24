@@ -143,7 +143,7 @@ There are lots of possibilities, but [I need help!](https://github.com/dherman/n
 
 ## A Quick Thanks
 
-There's a ton of fun exploration and work left to do but I couldn't have gotten this far without huge amounts of help already: [Andrew Oppenlander's blog post](http://oppenlander.me/articles/rust-ffi) got me off the ground, Ben Noordhuis and Marcin Cieślak helped me wrestle with V8's tooling, I picked up a few tricks from Nathan Rajlich's [evil genius code](https://github.com/TooTallNate/node-bindings/blob/master/bindings.js), Adam Klein and Fedor Indutny helped me understand the V8 API, Niko Matsakis helped me with designing the safe memory management API, and Yehuda Katz helped me with the overall design.
+There's a ton of fun exploration and work left to do but I couldn't have gotten this far without huge amounts of help already: [Andrew Oppenlander's blog post](http://oppenlander.me/articles/rust-ffi) got me off the ground, Ben Noordhuis and Marcin Cieślak helped me wrestle with V8's tooling, I picked up a few tricks from Nathan Rajlich's [evil genius code](https://github.com/TooTallNate/node-bindings/blob/master/bindings.js), Adam Klein and Fedor Indutny helped me understand the V8 API, Alex Crichton helped me with compiler and linker arcana, Niko Matsakis helped me with designing the safe memory management API, and Yehuda Katz helped me with the overall design.
 
 You know what this means? [**Maybe you can help too!**](https://github.com/dherman/neon)
 
