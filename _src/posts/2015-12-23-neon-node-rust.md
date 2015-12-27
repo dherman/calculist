@@ -139,7 +139,7 @@ var myNeonModule = require('neon-bridge').load();
 
 Hopefully this demo is enough to get people interested. Beyond the sheer fun of it, I think the strongest reasons for using Rust in Node are performance and parallelism. As the Rust ecosystem grows, it'll also be a way to give Node access to cool Rust libraries. Beyond that, I'm hoping that Neon can make a nice abstraction layer that just makes writing native Node modules less painful. With projects like [node-uwp](https://blogs.windows.com/buildingapps/2015/05/12/bringing-node-js-to-windows-10-iot-core/) it might even be worth exploring evolving Neon towards a JS-engine-agnostic abstraction layer.
 
-There are lots of possibilities, but [I need help!](https://github.com/dherman/neon) If you want to get in touch, I've created a [community slack](http://neon-bridge.slack.com) and a `#neon-bridge` IRC channel on freenode.
+There are lots of possibilities, but [I need help!](https://github.com/dherman/neon) If you want to get involved, I've created a [community slack](http://neon-community.slack.com) (grab an invite from [the Slackin app](http://neon-community-slackin.herokuapp.com)) and a `#neon` IRC channel on [Mozilla IRC](https://wiki.mozilla.org/IRC) (`irc.mozilla.org`).
 
 ## A Quick Thanks
 
