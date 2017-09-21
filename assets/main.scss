@@ -1,0 +1,23 @@
+---
+---
+
+@import "whiteglass";
+
+article img,
+article .video,
+.post-list .post-content img,
+img.about {
+    border-radius: 0.3em;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border: 0.5em solid #fff;
+}
+
+.right {
+    float: right;
+    margin-left: 1.5em;
+}
+
+.left {
+    float: left;
+    margin-right: 1.5em;
+}

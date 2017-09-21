@@ -1,9 +1,0 @@
-@(local-require (file "../_util/date-format.rkt"))
-
-<article class="index-post">
-  <header>
-    <h1><a href='@|uri-path|'>@|title|</a></h1>
-    <p class='index-date'>@(pretty-date date-struct)</p>
-  </header>
-  @|content|
-</article>
