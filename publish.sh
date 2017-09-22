@@ -8,8 +8,8 @@ remote_repo="https://${GH_TOKEN}@github.com/dherman/calculist.git"
 remote_branch='gh-pages'
 
 git init
-git config user.name "Travis CI"
-git config user.email "nobody@nobody.org"
+git config user.name "David Herman"
+git config user.email "david.herman@gmail.com"
 
 git add .
 git commit -m 'travis build'
