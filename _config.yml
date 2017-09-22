@@ -26,13 +26,9 @@ excerpt_separator: <!--more-->
 exclude:
   - .travis.yml
   - publish.sh
-  - [vendor]
-
-# Defaults:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - Gemfile
+  - Gemfile.lock
