@@ -6,7 +6,6 @@ categories:
   - typed arrays
   - binary data
   - endianness
-excerpt_separator: <!--more-->
 ---
 
 <a href="http://en.wikipedia.org/wiki/The_Gates_of_Hell"><img class="right" src="/assets/gates-of-hell.jpg" style="width: 100px; height: 163px;" /></a>

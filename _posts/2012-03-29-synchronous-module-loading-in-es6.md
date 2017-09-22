@@ -6,7 +6,6 @@ categories:
   - JavaScript
   - modules
   - async
-excerpt_separator: <!--more-->
 ---
 
 One of the great features of ES6 modules is the direct style module loading syntax:

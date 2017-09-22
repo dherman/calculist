@@ -9,7 +9,6 @@ categories:
   - structural types
   - duck types
   - duck testing
-excerpt_separator: <!--more-->
 ---
 
 Imagine a `BitSet` constructor with an overloaded API for setting bits:

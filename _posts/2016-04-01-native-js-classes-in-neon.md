@@ -21,6 +21,8 @@ pub struct Employee {
 }
 ```
 
+<!--more-->
+
 You can expose this to JS with the new `declare_types!` macro:
 
 ```rust

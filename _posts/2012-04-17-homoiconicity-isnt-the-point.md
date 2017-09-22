@@ -10,6 +10,8 @@ categories:
 
 I've never really understood what "homoiconic" is supposed to mean. People often say something like "the syntax uses one of the language's basic data structures." That's a category error: syntax is not a data structure, it's just a representation of data as text. Or you hear "[the syntax of the language is the same as the syntax of its data structures][niko]." But S-expressions don't "belong" to Lisp; there's no reason why Perl or Haskell or JavaScript couldn't have S-expression libraries. And every parser generates a data structure, so if you have a [Python parser in Python][python parser], then is Python homoiconic? Is [JavaScript][esprima]?
 
+<!--more-->
+
 Maybe there's a more precise way to define homoiconicity, but frankly I think it misses the point. What makes Lisp's syntax powerful is not the fact that it can be represented as a data structure, it's that <strong>it's possible to <em>read</em> it without </em>parsing</em></strong>.
 
 Wait, what?

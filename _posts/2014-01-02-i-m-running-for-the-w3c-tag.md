@@ -5,7 +5,6 @@ date: 2014-01-02T15:07:25
 categories:
   - W3C
   - TAG
-excerpt_separator: <!--more-->
 ---
 
 The W3C's Technical Architecture Group (TAG) has two open seats for 2014, and [I'm running for one of those seats](http://lists.w3.org/Archives/Public/www-tag/2013Dec/0004.html).

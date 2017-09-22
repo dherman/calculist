@@ -9,6 +9,8 @@ caregories:
 
 I haven't spoken enough about the rationale for declarative, static module resolution in [ES6 modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules). Since multiple module systems exist in pure JS, the concept of modules that involve new syntax is coming across as foreign to people. I'd like to explain the motivation.
 
+<!--more-->
+
 First, a quick explanation of what this is about. In a pure-JS system like CommonJS, modules are just objects, and whatever definitions they export can be imported by a client with object property lookup:
 
 ```javascript

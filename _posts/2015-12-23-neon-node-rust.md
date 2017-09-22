@@ -10,6 +10,8 @@ categories:
 
 If you're a JavaScript programmer who's been intrigued by Rust's [_hack without fear_](http://blog.rust-lang.org/2015/08/14/Next-year.html) theme---making systems programming safe and fun---but you've been waiting for inspiration, I may have something for you! I've been working on [Neon](https://github.com/dherman/neon), a set of APIs and tools for **making it super easy to write native Node modules in Rust**.
 
+<!--more-->
+
 **TL;DR:**
 
   * [Neon](https://github.com/dherman/neon) is an API for writing fast, crash-free native Node modules in Rust;

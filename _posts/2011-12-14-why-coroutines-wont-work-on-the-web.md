@@ -7,7 +7,6 @@ categories:
   - coroutines
   - continuations
   - generators
-excerpt_separator: <!--more-->
 ---
 
 <img class="right" src="/assets/yunocoros.jpg" style="width: 200px; height: 150px;" /> The topic of coroutines (or

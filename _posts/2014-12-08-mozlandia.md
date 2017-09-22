@@ -7,6 +7,8 @@ categories: Mozilla
 
 <img class="right" style="width: 225px; height: 226px;" src="/assets/mozlanyardia.jpg" /> When Chris Beard first announced that over a thousand Mozilla staff and contributors would be descending on Portland this month for an [all-hands work week](https://twitter.com/search?q=%23mozlandia), I worried about two things. I knew a couple of the groups in my department would be approaching deadlines. And I was afraid that so many groups of people in one place would be chaotic and hard to coordinate. I wasn't even wrong -- but it didn't matter.
 
+<!--more-->
+
 The level of focus and effectiveness last week was remarkable. For Mozilla Research's part, we coordinated with multiple groups, planned 2015 projects, worked through controversial technical decisions, removed obstacles, brought new contributors on board, and even managed to get a bunch of project work done all at the same time.
 
 There were a few things that made last week a success:

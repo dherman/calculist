@@ -6,7 +6,6 @@ categories:
   - typed arrays
   - binary data
   - endianness
-excerpt_separator: <!--more-->
 ---
 
 Here's the deal: [typed arrays](http://www.khronos.org/registry/typedarray/specs/latest/) are not fully portable. On most browsers, this code will print 1:
