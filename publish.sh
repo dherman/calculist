@@ -4,7 +4,7 @@ set -ev
 
 cd ./_site
 
-remote_repo=$(git config remote.origin.url)
+remote_repo="https://${GH_TOKEN}@github.com/dherman/calculist.git"
 remote_branch='gh-pages'
 
 git init

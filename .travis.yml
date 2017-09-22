@@ -2,6 +2,9 @@ sudo: false
 language: ruby
 cache:
   bundler: true
+env:
+  global:
+    secure: N3adX9gduvvv9oAShe3+XLGcgwkd5M/MnxjasvZKS/a5xIkuB2VHLvOm9oH8a6AaF6Ex3s/a5iVM7bb5GLaJxdE9iwHLEbraGBKpeOJTF9GctYK3Evr/rHggHKykLVbBps538x6ttuzlk7ap5+Pfh47kJGXuR5vPgSLS903IjKI=
 
 rvm:
   - 2.3.1
@@ -14,5 +17,5 @@ before_deploy:
 
 deploy:
   provider: script
-  script: ./publish.sh
+  script: "./publish.sh"
   skip_cleanup: true
