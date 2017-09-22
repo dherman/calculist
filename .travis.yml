@@ -1,0 +1,18 @@
+sudo: false
+language: ruby
+cache:
+  bundler: true
+
+rvm:
+  - 2.3
+
+script:
+  - bundle exec jekyll build
+
+before_deploy:
+  - chmod +x publish.sh
+
+deploy:
+  provider: script
+  script: ./publish.sh
+  skip_cleanup: true
