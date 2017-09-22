@@ -26,6 +26,7 @@ excerpt_separator: <!--more-->
 exclude:
   - .travis.yml
   - publish.sh
+  - [vendor]
 
 # Defaults:
 #   - Gemfile
