@@ -8,7 +8,7 @@ url: "http://calculist.org"
 timezone: America/Los_Angeles
 twitter_username: littlecalculist
 github_username:  dherman
-#google_analytics: UA-27510188-1
+google_analytics: UA-27510188-1
 permalink: /blog/:year/:month/:day/:slug/
 
 # Build settings
