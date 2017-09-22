@@ -13,7 +13,7 @@ git config user.email "nobody@nobody.org"
 
 git add .
 git commit -m 'travis build'
-git push --force --quiet $remote_repo master:$remote_branch > /dev/null 2>&1
+git push --force --quiet $remote_repo master:$remote_branch #> /dev/null 2>&1
 
 rm -rf .git
 cd ..
