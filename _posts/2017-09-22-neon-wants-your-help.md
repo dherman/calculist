@@ -41,24 +41,28 @@ Just to give you a sense of the many varied kinds of contributions we could use,
 
 **Macrology.** One of the big, exciting projects we have left is to flesh out the [high-level macro for defining JavaScript classes]({{ site.baseurl }}{% post_url 2016-04-01-native-js-classes-in-neon %}) (and another for defining standalone functions) so users can use simple type annotations to automate conversions between JavaScript and Rust types. We should take inspiration from the design of our sibling project, [Helix](http://usehelix.com)!
 
-**API design.**
+**Web development.** The Neon web site is currently a static page. It certainly would be fun to set it up as a Node page using Neon itself! One of the nice dynamic things we could do would be to create a [roadmap page like the one Helix has](http://usehelix.com/roadmap), with automatic tracking of milestone progress using GitHub APIs. We should also set up a Neon project blog and style it consistently with the rest of [neon-bindings.com](https://www.neon-bindings.com).
 
-**Systems programming.**
+**Ops and automation.** I've started an [automation label](https://github.com/neon-bindings/neon/issues?q=is%3Aissue+is%3Aopen+label%3Aautomation) in the issues. A fantastic contribution would be an automated [publication script](https://github.com/neon-bindings/neon/issues/42) to make releases one-touch. (This is realistically achievable now thanks to some project reorganization.)
 
-**Ops and automation.**
+**Node plugins.** We should explore the possibility of supporting using the new [N-API](https://nodejs.org/api/n-api.html) as an alternative backend for the implementation. We wouldn't be able to move to this as the default backend right away, but it could pave the way for supporting [Node on ChakraCore](https://github.com/nodejs/node-chakracore), and eventually might replace the current backend entirely.
 
-**Node plugins.**
+**API design.** There are lots of things you can do in JavaScript that you still can't do in Neon, so there's plenty of missing APIs to finish. And it's not too late to make incompatible changes to the API that's there currently. For example, I'd be especially interested in ideas about making the [`Scope`](https://api.neon-bindings.com/neon/scope/trait.scope) API less awkward, if possible.
 
-**Threading architectures.**
+**Systems programming.** One of the biggest challenges we have to tackle is making the process of shipping Neon libraries practical, especially for shipping prebuilt binaries. One technique we can explore is to create an ABI-stable middle layer so that Neon binaries don't need to be rebuilt for different versions of Node.
 
-**Web development.**
+**Threading architectures.** Currently, Neon supports a couple of forms of threading: pausing the JavaScript VM to synchronously run a parallelized Rust computation (via the [`Lock`](https://api.neon-bindings.com/neon/vm/trait.lock) API), and running a background [`Task`](https://api.neon-bindings.com/neon/task/trait.task) as part of the [libuv thread pool](http://docs.libuv.org/en/v1.x/threadpool.html). There's more we can do both on the computation side (for example, supporting attaching to different threads than libuv's pool) and the data side (for example, supporting [`ArrayBuffer` transfer](https://v8docs.nodesource.com/node-8.0/d5/d6e/classv8_1_1_array_buffer.html#a9291f6ac203b9ceae83f7f17d39ecb59)).
+
+## Getting Involved
+
+Does any of these sound like something you'd be interested in? Or maybe you have other ideas! If you want to help, come talk to me (**@dherman**) in the `#neon` channel on the [Rust Bindings community Slack](https://rust-bindings.slack.com/) (make sure to get an [automatic invite first](https://rust-bindings-slackin.herokuapp.com/)).
 
 ## A Note About Community
 
 As the original creator of this project, I'm responsible not only for the software but for the community I foster. I _deeply love_ this part of open source, and I don't take the responsibility lightly.
 
-Neon has a ton of cool tech inside of it, and if that's the only aspect you're interested in, that's totally OK. Still, it's important to understand that, like Rust itself, this whole project's purpose is to **widen the circle of tech and empower new systems programmers.** So I ask of everyone who participates in the Neon project to strive to act in ways that will encourage and motivate as many people as possible to participate.
+Neon has a ton of cool tech inside of it, and if that's the only aspect you're interested in, that's totally OK. Not everyone needs to be focused on community-building. Still, not unlike Rust, this whole project's purpose is to **widen the circle of tech and empower new systems programmers.** So I ask of everyone who participates in the Neon project to strive to act in ways that will encourage and motivate as many people as possible to participate.
 
-In operational terms, Neon uses the [Contributor Covenant](https://www.contributor-covenant.org/) to frame the expectations around what is and isn't welcome behavior. More broadly, it's helpful to [remember the goals](https://twitter.com/sarahmei/status/899880200577499136): to **make our community a place that welcomes, trust, supports, and empowers one another.**
+Concretely, Neon uses the [Contributor Covenant](https://www.contributor-covenant.org/) to frame the expectations around our standards of how we treat people in our community. Behind the policies is a [simple goal](https://twitter.com/sarahmei/status/899880200577499136): to **make our community a place that welcomes, trust, supports, and empowers one another.**
 
-So if that sounds good to you, wanna come join us?
+If that sounds good to you, wanna come join us?
