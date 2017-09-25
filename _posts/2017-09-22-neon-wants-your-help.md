@@ -25,7 +25,7 @@ My dream is to make Neon:
 - **Easy to learn:** The default abstraction layer should be intuitive enough that a newcomer's first experience coming from JavaScript should be approachable, and there should be documentation and learning materials to smoothe the on-boarding experience.
 - **Rock-solid:** Users should feel confident that refactoring their code in Rust should be no more likely to crash their Node server than vanilla JavaScript.
 - **Fully-featured:** The Neon API should be able to express everything you could do in JavaScript itself.
-- **Stable:** Once we start approaching 1.0, Rust should get on a regular release cycle, with strong commitment to semantic versioning and backwards compatibility.
+- **Stable:** Once we start approaching 1.0, Neon should get on a regular release cycle, with strong commitment to semantic versioning and backwards compatibility.
 
 Just to give you a sense of the many varied kinds of contributions we could use, here's a taste:
 
