@@ -10,9 +10,9 @@ categories:
 published: false
 ---
 
-<img class="right" style="width: 184px; height: 128px;" src="/assets/come-in.png" /> [Neon](https://www.neon-bindings.com) is a library for conveniently implementing fast, crash-free native Node.js modules with Rust. We've been making steady progress in recent months, with some cool new features including [Electron support](https://guides.neon-bindings.com/electron-apps/) and a new [Task API](https://api.neon-bindings.com/neon/task/) for asynchronously spawning Rust computations to run in a background thread.
+[Neon](https://www.neon-bindings.com) is a library for conveniently implementing fast, crash-free native Node.js modules with Rust. We've been making steady progress in recent months, with some cool new features including [Electron support](https://guides.neon-bindings.com/electron-apps/) and a new [Task API](https://api.neon-bindings.com/neon/task/) for asynchronously spawning Rust computations to run in a background thread.
 
-But there's much more to do! **I'm inviting you---yes, you!---to come help take Neon to the next level.** We would benefit enormously from contributors with **a wide range of skills and backgrounds.** 
+<img class="right" style="width: 200px; height: 150px;" src="/assets/help-wanted.jpg" /> But there's much more to do! **I'm inviting you---yes, you!---to come help take Neon to the next level.** We would benefit enormously from contributors with **a wide range of skills and backgrounds.** 
 
 <!--more-->
 
@@ -21,7 +21,7 @@ But there's much more to do! **I'm inviting you---yes, you!---to come help take 
 My dream is to make Neon:
 
 - **Easy to learn:** The default abstraction layer should be intuitive enough that a newcomer's first experience coming from JavaScript should be approachable, and there should be documentation and learning materials to smoothe the on-boarding experience.
-- **Rock-solid:** Users should feel confident that refactoring their code in Rust should be no more likely to crash down their Node server than vanilla JavaScript.
+- **Rock-solid:** Users should feel confident that refactoring their code in Rust should be no more likely to crash their Node server than vanilla JavaScript.
 - **Fully-featured:** The Neon API should be able to express everything you could do in JavaScript itself.
 - **Stable:** Once we start approaching 1.0, Rust should get on a regular release cycle, with strong commitment to semantic versioning and backwards compatibility.
 
@@ -37,7 +37,7 @@ Just to give you a sense of the many varied kinds of contributions we could use,
 
 **Windows development.** My primary development machine is Windows these days, but I'm not an expert. I recently [broke our Appveyor builds](https://github.com/neon-bindings/neon/issues/248) just to prove it! 😝 We've also seen some intermittent hangs in Appveyor builds and I'd love a Windows expert to [do some investigating](https://github.com/neon-bindings/neon/issues/250)!
 
-**Web development.** The Neon web site is currently a static page. It certainly would be fun to set it up as a Node page using Neon itself! One of the nice dynamic things we could do would be to create a [roadmap page like the one Helix has](http://usehelix.com/roadmap), with automatic tracking of milestone progress using GitHub APIs. We should also set up a Neon project blog and style it consistently with the rest of [neon-bindings.com](https://www.neon-bindings.com).
+**Web development.** The Neon web site is currently a static page. It certainly would be fun to set it up as a Node page using Neon itself! One of the nice dynamic things we could do would be to create a roadmap page like [the one Helix has](http://usehelix.com/roadmap), with automatic tracking of milestone progress using GitHub APIs. We should also set up a Neon project blog with Jekyll and style it consistently with the rest of [neon-bindings.com](https://www.neon-bindings.com).
 
 **Ops and automation.** I've started an [automation label](https://github.com/neon-bindings/neon/issues?q=is%3Aissue+is%3Aopen+label%3Aautomation) in the issues. A fantastic contribution would be an automated [publication script](https://github.com/neon-bindings/neon/issues/42) to make releases one-touch. (This is realistically achievable now thanks to some project reorganization.)
 
@@ -55,14 +55,14 @@ Just to give you a sense of the many varied kinds of contributions we could use,
 
 ## Getting Involved
 
-Does any of these sound like something you'd be interested in? Or maybe you have other ideas! If you want to help, come talk to me (**@dherman**) in the `#neon` channel on the [Rust Bindings community Slack](https://rust-bindings.slack.com/) (make sure to get an [automatic invite first](https://rust-bindings-slackin.herokuapp.com/)).
+Does any of these sound like something you'd be interested in? Or maybe you have other ideas! If you want to help, come talk to me (**@dherman**) in the [`#neon` community Slack channel](https://rust-bindings.slack.com/messages/neon) (make sure to get an [automatic invite](https://rust-bindings-slackin.herokuapp.com/) first).
 
-## A Note About Community
+## <img class="right" style="width: 184px; height: 128px;" src="/assets/come-in.png" /> A Note About Community
 
 As the original creator of this project, I'm responsible not only for the software but for the community I foster. I _deeply love_ this part of open source, and I don't take the responsibility lightly.
 
 Neon has a ton of cool tech inside of it, and if that's the only aspect you're interested in, that's totally OK. Not everyone needs to be passionate about community-building. Still, not unlike Rust, this whole project's purpose is to **widen the circle of tech and empower new systems programmers.** So I ask of everyone who participates in the Neon project to strive to act in ways that will encourage and motivate as many people as possible to participate.
 
-Concretely, Neon uses the [Contributor Covenant](https://www.contributor-covenant.org/) to frame the expectations and standards of how we treat people in our community. Behind the policies is a simple goal: to **make our community a place that welcomes, trust, supports, and empowers one another.**
+Concretely, Neon uses the [Contributor Covenant](https://www.contributor-covenant.org/) to frame the expectations and standards of how we treat people in our community. Behind the policies is a simple goal: to **make our community a place that welcomes, trusts, supports, and empowers one another.**
 
 If that sounds good to you, wanna come join us?
