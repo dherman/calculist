@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>#Rust2018: A Neon Wish List</title>
+  <meta name="description" content="While I’ve been thoroughly enjoying the Rust community’s spirited #Rust2018 blog-fest, I wasn’t really thinking of participating myself until Julia Evans pointed out the leadership wants to hear from everyone—even if I might not have anything especially new to add. So here’s my little wish list for Rust in 2018. Since I’m not in Rust’s leadership, I don’t have to worry about synthesizing some grand narrative for the whole of Rust. So I’ll just focus on a few things that would be personally useful to me. In particular, I’ll stick to topics that would be helpful for my Neon project, a set of bindings for writing native Node extension modules in Rust.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2018/01/14/rust-2018-a-neon-wish-list/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="#Rust2018: A Neon Wish List">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2018/01/14/rust-2018-a-neon-wish-list/">
+  <meta property="og:description" content="While I’ve been thoroughly enjoying the Rust community’s spirited #Rust2018 blog-fest, I wasn’t really thinking of participating myself until Julia Evans pointed out the leadership wants to hear from everyone—even if I might not have anything especially new to add. So here’s my little wish list for Rust in 2018. Since I’m not in Rust’s leadership, I don’t have to worry about synthesizing some grand narrative for the whole of Rust. So I’ll just focus on a few things that would be personally useful to me. In particular, I’ll stick to topics that would be helpful for my Neon project, a set of bindings for writing native Node extension modules in Rust.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="#Rust2018: A Neon Wish List">
+  <meta name="twitter:description" content="While I’ve been thoroughly enjoying the Rust community’s spirited #Rust2018 blog-fest, I wasn’t really thinking of participating myself until Julia Evans pointed out the leadership wants to hear fr...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">#Rust2018: A Neon Wish List</h1>
+    
+    <p class="post-meta"><time datetime="2018-01-13T17:45:00-08:00" itemprop="datePublished">Jan 14, 2018</time> •
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>While I’ve been thoroughly enjoying the Rust community’s spirited <a href="https://blog.rust-lang.org/2018/01/03/new-years-rust-a-call-for-community-blogposts.html">#Rust2018 blog-fest</a>, I wasn’t really thinking of participating myself until <a href="http://jvns.ca">Julia Evans</a> pointed out <a href="https://twitter.com/b0rk/status/952370352759418880">the leadership wants to hear from everyone</a>—even if I might not have anything especially new to add. So here’s my little wish list for Rust in 2018.</p>
+
+<p>Since I’m not in Rust’s leadership, I don’t have to worry about synthesizing some grand narrative for the whole of Rust. So I’ll just focus on a few things that would be personally useful to me. In particular, I’ll stick to topics that would be helpful for my <a href="https://www.neon-bindings.com">Neon</a> project, a set of bindings for writing native Node extension modules in Rust.</p>
+
+<!--more-->
+
+<h1 id="stabilize-impl-trait">Stabilize <code class="highlighter-rouge">impl trait</code></h1>
+
+<p>The most challenging part of keeping Neon’s design manageable is the annotation burden. Neon provides a safe API for managing handles into Node’s JavaScript garbage collector, and to do this, it requires passing around a “handle scope” parameter everywhere, which tracks the lifetimes of handles. There are a few flavors of handle scopes, which means helper functions in Neon projects often end up with some pretty hairy signatures:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">fn</span> <span class="n">get_foo_bar</span><span class="o">&lt;</span><span class="err">'</span><span class="n">a</span><span class="p">,</span> <span class="n">S</span><span class="p">:</span> <span class="n">Scope</span><span class="o">&lt;</span><span class="err">'</span><span class="n">a</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">scope</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">S</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Handle</span><span class="o">&lt;</span><span class="err">'</span><span class="n">a</span><span class="p">,</span> <span class="n">JsObject</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">JsResult</span><span class="o">&lt;</span><span class="err">'</span><span class="n">a</span><span class="p">,</span> <span class="n">JsValue</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c">// extract the `obj.foo` property and check that it's an object</span>
+    <span class="k">let</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">obj</span><span class="nf">.get</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s">"foo"</span><span class="p">)</span><span class="err">?</span><span class="py">.check</span><span class="p">::</span><span class="o">&lt;</span><span class="n">JsObject</span><span class="o">&gt;</span><span class="p">()</span><span class="err">?</span><span class="p">;</span>
+    <span class="c">// extract the `obj.foo.bar` property</span>
+    <span class="k">let</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="nf">.get</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s">"bar"</span><span class="p">)</span><span class="err">?</span><span class="p">;</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>I would love for Neon users to be able to combine lifetime elision and the <a href="https://github.com/rust-lang/rust/issues/34511"><code class="highlighter-rouge">impl trait</code></a> shorthand syntax to write something like:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_foo_bar</span><span class="p">(</span><span class="n">scope</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="k">impl</span> <span class="n">Scope</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Handle</span><span class="o">&lt;</span><span class="n">JsObject</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">JsResult</span><span class="o">&lt;</span><span class="n">JsValue</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c">// ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>(With an upcoming <a href="https://github.com/dherman/rfcs-1/blob/vm-two-point-oh/text/vm-2.0.md">cleanup of the core Neon API</a>, the details of this would change a bit, but <code class="highlighter-rouge">impl trait</code> would be just as appealing.)</p>
+
+<h1 id="syntactic-abstraction-for-error-propagation">Syntactic abstraction for error propagation</h1>
+
+<p>I adore the <code class="highlighter-rouge">?</code> syntax, but it’s not enough! Expressions like <code class="highlighter-rouge">Ok(bar)</code> in the above example are an indication that we don’t have a complete abstraction layer in the syntax for error propagation. I find it particularly galling when I have to see <code class="highlighter-rouge">Ok(())</code>. It’s dipping down into an unnecessary abstraction layer, distracting the core logic of the function with mechanical details of the representation of Rust’s control flow protocols.</p>
+
+<p>I’m excited about the discussions around <a href="https://internals.rust-lang.org/t/pre-rfc-catching-functions/6505">“catching functions”</a>. I think we can get to a sweet spot where we have an abstraction layer in the syntax that never exposes the <code class="highlighter-rouge">Result</code> type for error handling, while still explicitly annotating every point that may throw (thanks to <code class="highlighter-rouge">?</code> syntax, and by contrast to exceptions). The above examples might look something like:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_foo_bar</span><span class="p">(</span><span class="n">scope</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="k">impl</span> <span class="n">Scope</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Handle</span><span class="o">&lt;</span><span class="n">JsObject</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Handle</span><span class="o">&lt;</span><span class="n">JsValue</span><span class="o">&gt;</span> <span class="n">catch</span> <span class="n">JsException</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">obj</span><span class="nf">.get</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s">"foo"</span><span class="p">)</span><span class="err">?</span><span class="py">.check</span><span class="p">::</span><span class="o">&lt;</span><span class="n">JsObject</span><span class="o">&gt;</span><span class="p">()</span><span class="err">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span><span class="nf">.get</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="s">"bar"</span><span class="p">)</span><span class="err">?</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">bar</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h1 id="make-cargo-more-extensible">Make cargo more extensible</h1>
+
+<p>Like <code class="highlighter-rouge">xargo</code> and <code class="highlighter-rouge">wargo</code>, Neon comes with a command-line tool that wraps cargo’s behavior in order to abstract away a bunch of build configuration details. I’m proud of this abstraction, because it makes building native modules in Node far easier than they are with C++. But I would much rather Neon programmers could use cargo directly, calling all their usual familiar commands like <code class="highlighter-rouge">cargo build</code> and <code class="highlighter-rouge">cargo run</code>.</p>
+
+<p>To support this, Neon will need a handful of extension points that don’t exist today:</p>
+
+<ul>
+  <li>The ability to extend the memoization logic with extra environmental information (e.g. which version of Node is being built for and the values of some Node-specific environment variables).</li>
+  <li>Post-build hooks, so I can generate the final DLL and put it in the right directory.</li>
+  <li>The ability to add default build flags (for example, on macOS, <code class="highlighter-rouge">neon build</code> actually calls <code class="highlighter-rouge">cargo rustc</code> with some extra low-level linking flags).</li>
+  <li>Project templates for <code class="highlighter-rouge">cargo new</code>.</li>
+</ul>
+
+<p>Being able to write</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cargo new --template<span class="o">=</span>neon my-first-neon-project
+<span class="gp">$ </span><span class="nb">cd </span>my-first-neon-project
+<span class="gp">$ </span>cargo run
+</code></pre>
+</div>
+
+<p>would be so amazing.</p>
+
+<h1 id="neon-is-about-welcoming-js-programmers">Neon is about welcoming JS programmers</h1>
+
+<p>I promised no narrative, but there is a common thread here. I started the Neon project because I thought it would make a great bridge between the JavaScript and Rust communities. All of the topics in this post are about facilitating that connection:</p>
+
+<ul>
+  <li>Neon forces JS programmers to get more explicit about working with the garbage collector than they normally have to, so making that as lightweight as possible makes falling into native code less of a steep cliff.</li>
+  <li>JS is a language with exceptions, so making the protocol for emulating exceptions in Rust as ergonomic as possible will make Rust a better environment for JS programmers.</li>
+  <li>And just as Node projects have a workflow oriented around <code class="highlighter-rouge">npm</code>, giving Neon projects a standard <code class="highlighter-rouge">cargo</code>-based workflow will feel familiar and pleasant to Node programmers.</li>
+</ul>
+
+<p>My dream is that Neon can serve as a gateway welcoming JS programmers into Rust and systems programming for years to come. The more we smoothe the path between them, the more people we invite into our community.</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

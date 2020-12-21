@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>The Little Calculist</title>
+  <meta name="description" content="Dave Herman&#39;s personal blog.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/page6/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="The Little Calculist">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/page6/">
+  <meta property="og:description" content="Dave Herman&#39;s personal blog.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="The Little Calculist">
+  <meta name="twitter:description" content="Dave Herman&#39;s personal blog.">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+
+  
+
+  
+
+  <ul class="post-list">
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2012/03/29/synchronous-module-loading-in-es6/">Synchronous module loading in ES6</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Mar 29, 2012
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>One of the great features of ES6 modules is the direct style module loading syntax:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">map</span> <span class="nx">from</span> <span class="s2">"underscore.js"</span><span class="p">;</span>
+<span class="p">...</span> <span class="nx">map</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span> <span class="p">...</span>
+</code></pre>
+</div>
+
+<p>This makes it as frictionless as possible to grow or refactor your code into multiple modules, and to pull third-party modules into an existing codebase. It also makes a common module format that can be shared between the browser and JS servers like Node.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2012/03/29/synchronous-module-loading-in-es6/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2012/01/10/two-years-at-moco/">Two years at MoCo</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Jan 10, 2012
+            
+               •
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>If I remember right, today is my two year anniversary working full time at Mozilla. And it works out to about six years of working with Mozilla and <a href="http://www.ecma-international.org/memento/TC39.htm">TC39</a>. I could stop and get sentimental, but <a href="http://wiki.ecmascript.org/doku.php?id=harmony:proposals">there’s work to do</a>.</p>
+
+        </div>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2011/12/14/why-coroutines-wont-work-on-the-web/">Why coroutines won’t work on the web</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Dec 14, 2011
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p><img class="right" src="/assets/yunocoros.jpg" style="width: 200px; height: 150px;" /> The topic of coroutines (or
+fibers, or continuations) for JavaScript comes up from time to time,
+so I figured I’d write down my thoughts on the matter. I admit to
+having a soft spot for crazy control-flow features like continuations,
+but they’re unlikely ever to make it into ECMAScript. With good
+reason.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2011/12/14/why-coroutines-wont-work-on-the-web/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="pagination">
+    
+      <a class="previous" href="/page7">&laquo; Older</a>
+    
+
+    
+      <a class="next" href="/page5">Newer &raquo;</a>
+    
+  </div>
+
+
+
+</div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

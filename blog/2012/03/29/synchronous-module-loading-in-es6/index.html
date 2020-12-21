@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Synchronous module loading in ES6</title>
+  <meta name="description" content="One of the great features of ES6 modules is the direct style module loading syntax: import map from &quot;underscore.js&quot;; ... map(a, f) ... This makes it as frictionless as possible to grow or refactor your code into multiple modules, and to pull third-party modules into an existing codebase. It also makes a common module format that can be shared between the browser and JS servers like Node.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2012/03/29/synchronous-module-loading-in-es6/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Synchronous module loading in ES6">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2012/03/29/synchronous-module-loading-in-es6/">
+  <meta property="og:description" content="One of the great features of ES6 modules is the direct style module loading syntax: import map from &quot;underscore.js&quot;; ... map(a, f) ... This makes it as frictionless as possible to grow or refactor your code into multiple modules, and to pull third-party modules into an existing codebase. It also makes a common module format that can be shared between the browser and JS servers like Node.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Synchronous module loading in ES6">
+  <meta name="twitter:description" content="One of the great features of ES6 modules is the direct style module loading syntax: import map from &quot;underscore.js&quot;; ... map(a, f) ... This makes it as frictionless as possible to grow or...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Synchronous module loading in ES6</h1>
+    
+    <p class="post-meta"><time datetime="2012-03-29T00:41:00-07:00" itemprop="datePublished">Mar 29, 2012</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>One of the great features of ES6 modules is the direct style module loading syntax:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">map</span> <span class="nx">from</span> <span class="s2">"underscore.js"</span><span class="p">;</span>
+<span class="p">...</span> <span class="nx">map</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span> <span class="p">...</span>
+</code></pre>
+</div>
+
+<p>This makes it as frictionless as possible to grow or refactor your code into multiple modules, and to pull third-party modules into an existing codebase. It also makes a common module format that can be shared between the browser and JS servers like Node.</p>
+
+<!--more-->
+
+<p>But this direct style requires loading its dependencies before it can execute. That is, it’s a synchronous module load. Put in the context of a <code class="highlighter-rouge">script</code> tag, this would make it all too easy to block page rendering on I/O:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+<span class="kr">import</span> <span class="nx">$</span> <span class="nx">from</span> <span class="s2">"jquery.js"</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'myelement'</span><span class="p">).</span><span class="nx">style</span><span class="p">({</span> <span class="s1">'background-color'</span><span class="p">:</span> <span class="s1">'yellow'</span> <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p><img class="right" src="/assets/boromir-sync.jpg" /> Throwing this syntax into the browser like this would be an <a href="https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest#Synchronous_and_asynchronous_requests">invitation to jank</a>. Thanks to insight from <a href="http://blogs.msdn.com/b/lukeh">Luke Hoban</a>, I think we have the right approach to this for ES6, which is in fact similar to our approach to avoiding turning <code class="highlighter-rouge">eval</code> into a synchronous I/O operation.</p>
+
+<p>In previous versions of ECMAScript, there’s only one syntactic category of program that you can evaluate, called <code class="highlighter-rouge">Program</code> in the grammar. In ES6, we’ll define a restricted version of the syntax to be used in synchronous settings, which makes it illegal to do synchronous loads. Within a blocking script, the only access to modules is via the dynamic loading API:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+<span class="nx">System</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s2">"jquery.js"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'myelement'</span><span class="p">).</span><span class="nx">style</span><span class="p">({</span> <span class="s1">'background-color'</span><span class="p">:</span> <span class="s1">'yellow'</span> <span class="p">})</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p>This eliminates the footgun, and all of your modules can themselves use the synchronous loading syntax. For example, if <code class="highlighter-rouge">jquery.js</code> wants to use a module — say, a data structure library — it can go ahead and load it synchronously:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// jquery.js</span>
+<span class="kr">import</span> <span class="nx">Stack</span> <span class="nx">from</span> <span class="s2">"utils.js"</span><span class="p">;</span>
+<span class="p">...</span> <span class="k">new</span> <span class="nx">Stack</span><span class="p">()</span> <span class="p">...</span>
+</code></pre>
+</div>
+
+<p>But still, this restriction on the top-level loses the convenience of directly importing modules from scripts. Thing is, in an asynchronous context, there’s nothing wrong with doing a synchronous load. So just like the asynchronously loaded <code class="highlighter-rouge">jquery.js</code> can use the synchronous syntax, we can also allow it in a <code class="highlighter-rouge">defer</code> or <code class="highlighter-rouge">async</code> script:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">async</span><span class="nt">&gt;</span>
+<span class="kr">import</span> <span class="nx">$</span> <span class="nx">from</span> <span class="s2">"jquery.js"</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'myelement'</span><span class="p">).</span><span class="nx">style</span><span class="p">({</span> <span class="s1">'background-color'</span><span class="p">:</span> <span class="s1">'yellow'</span> <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p>This allows the full flexibility and expressiveness of ES6 embedded in HTML, without any hazard of blocking page rendering for I/O.</p>
+
+<p>The <code class="highlighter-rouge">eval</code> function for ES6 will work the same way, disallowing synchronous loading syntax in the grammar it recognizes, to prevent turning it into a synchronous API. We’ll also add an asynchronous version of <code class="highlighter-rouge">eval</code> that, like <code class="highlighter-rouge">script async</code>, recognizes the full grammar.</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

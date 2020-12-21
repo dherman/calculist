@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Tweaking the JavaScript AST API</title>
+  <meta name="description" content="A couple years ago I created a JavaScript parser API and implemented SpiderMonkey’s Reflect.parse library. Since then, there have been a couple of pure JavaScript implementations of the API, including Zach Carter’s reflect.js and Ariya Hidayat’s Esprima parser.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2012/07/03/tweaking-the-javascript-ast-api/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Tweaking the JavaScript AST API">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2012/07/03/tweaking-the-javascript-ast-api/">
+  <meta property="og:description" content="A couple years ago I created a JavaScript parser API and implemented SpiderMonkey’s Reflect.parse library. Since then, there have been a couple of pure JavaScript implementations of the API, including Zach Carter’s reflect.js and Ariya Hidayat’s Esprima parser.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Tweaking the JavaScript AST API">
+  <meta name="twitter:description" content="A couple years ago I created a JavaScript parser API and implemented SpiderMonkey’s Reflect.parse library. Since then, there have been a couple of pure JavaScript implementations of the API, includ...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Tweaking the JavaScript AST API</h1>
+    
+    <p class="post-meta"><time datetime="2012-07-03T04:53:00-07:00" itemprop="datePublished">Jul 3, 2012</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>A couple years ago I created a <a href="https://developer.mozilla.org/en/SpiderMonkey/Parser_API">JavaScript parser API</a> and implemented SpiderMonkey’s <a href="https://developer.mozilla.org/en/SpiderMonkey/Parser_API#Reflect.parse%28src.5B.2C_options.5D%29">Reflect.parse</a> library. Since then, there have been a couple of pure JavaScript implementations of the API, including Zach Carter’s <a href="https://github.com/zaach/reflect.js">reflect.js</a> and Ariya Hidayat’s <a href="http://esprima.org">Esprima</a> parser.</p>
+
+<!--more-->
+
+<p>Over time, I’ve gotten a bunch of good critiques about the API from people. I probably don’t want to make any huge changes, but there are a couple of small changes that would be nice:</p>
+
+<ul>
+  <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=770567">Bug 770567</a> - rename <code class="highlighter-rouge">callee</code> to <code class="highlighter-rouge">constructor</code> to match the documentation</li>
+  <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=742612">Bug 742612</a> - separate guarded/unguarded catch clauses</li>
+  <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=745678">Bug 745678</a> - range-based location info</li>
+</ul>
+
+<p>Ariya is graciously willing to change Esprima to keep in sync with SpiderMonkey. But some of these would affect existing clients of either library. I wanted to post this publicly to ask if there’s anyone who would be opposed to us making the change. Ariya and I would make sure to be very clear about when we’re making the change, and we’d try to batch the changes so that people don’t have to keep repeatedly updating their code.</p>
+
+<p>Feel free to leave a comment if you are using Esprima or <code class="highlighter-rouge">Reflect.parse</code> and have thoughts about this.</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

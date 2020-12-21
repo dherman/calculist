@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Why coroutines won’t work on the web</title>
+  <meta name="description" content="The topic of coroutines (or fibers, or continuations) for JavaScript comes up from time to time, so I figured I’d write down my thoughts on the matter. I admit to having a soft spot for crazy control-flow features like continuations, but they’re unlikely ever to make it into ECMAScript. With good reason.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2011/12/14/why-coroutines-wont-work-on-the-web/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Why coroutines won’t work on the web">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2011/12/14/why-coroutines-wont-work-on-the-web/">
+  <meta property="og:description" content="The topic of coroutines (or fibers, or continuations) for JavaScript comes up from time to time, so I figured I’d write down my thoughts on the matter. I admit to having a soft spot for crazy control-flow features like continuations, but they’re unlikely ever to make it into ECMAScript. With good reason.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Why coroutines won’t work on the web">
+  <meta name="twitter:description" content="The topic of coroutines (or fibers, or continuations) for JavaScript comes up from time to time, so I figured I’d write down my thoughts on the matter. I admit to having a soft spot for crazy contr...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Why coroutines won’t work on the web</h1>
+    
+    <p class="post-meta"><time datetime="2011-12-14T02:30:00-08:00" itemprop="datePublished">Dec 14, 2011</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p><img class="right" src="/assets/yunocoros.jpg" style="width: 200px; height: 150px;" /> The topic of coroutines (or
+fibers, or continuations) for JavaScript comes up from time to time,
+so I figured I’d write down my thoughts on the matter. I admit to
+having a soft spot for crazy control-flow features like continuations,
+but they’re unlikely ever to make it into ECMAScript. With good
+reason.</p>
+
+<!--more-->
+
+<p>The big justification for coroutines in JavaScript is non-blocking
+I/O. As we all know, asynchronous I/O leads to callback API’s, which
+lead to nested lambdas, which lead to… the pyramid of doom:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">range</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"preheat"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">pot</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"boil"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">rice</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"cooked"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">dinner</span><span class="p">.</span><span class="nx">serve</span><span class="p">(</span><span class="nx">rice</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Whereas, if you look at the README for
+<a href="https://github.com/laverdet/node-fibers">node-fibers</a>, you’ll see
+this pleasant-looking example:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Fiber</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'wait...'</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">);</span>
+    <span class="nx">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'ok...'</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>That looks pretty sweet. It’s a synchronous version of <code class="highlighter-rouge">setTimeout</code>
+that doesn’t block the main thread. This seems like a nice combination
+of the sequential style of synchronous code but with the
+responsiveness of non-blocking I/O. Why wouldn’t we want something
+like this in ECMAScript?</p>
+
+<h2 id="coroutines-are-almost-as-pre-emptive-as-threads">Coroutines are almost as pre-emptive as threads</h2>
+
+<p>Part of the beauty of JavaScript’s event loop is that there’s a very
+clear synchronization point for reaching a stable state in your
+programs: the end of the current turn. You can go ahead and leave
+things in a funky intermediate state for as long as you like, and as
+long as you stitch everything back up in time for the next spin of the
+event loop, no other code can run in the meantime. That means you can
+be sure that while your object is lying in pieces on the floor, nobody
+else can poke at it before you put it back together again.</p>
+
+<p>Once you add coroutines, you never know when someone might call
+<code class="highlighter-rouge">yield</code>.  Any function you call has the right to pause and resume you
+whenever they want, <em>even after any number of spins of the event
+loop</em>. Now any time you find yourself modifying state, you start
+worrying that calling a function might interrupt some code you
+intended to be transactional. Take something as simple as swapping a
+couple fields of an object:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">;</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">bar</span><span class="p">;</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">bar</span> <span class="o">=</span> <span class="nx">munge</span><span class="p">(</span><span class="nx">tmp</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>What happens if <code class="highlighter-rouge">munge</code> does a <code class="highlighter-rouge">yield</code> and only resumes your code
+after a few other events fire? Those events could interact with <code class="highlighter-rouge">obj</code>,
+and they’d see it in this intermediate state where both <code class="highlighter-rouge">obj.foo</code> and
+<code class="highlighter-rouge">obj.bar</code> are the same value, because <code class="highlighter-rouge">obj.bar</code> hasn’t yet been
+updated.</p>
+
+<p>We’ve seen this movie before. This is just like Java’s threads, where
+any time you’re working with state, you have to worry about who might
+try to touch your data before it reaches a stable point. To be fair,
+life is actually far worse in Java, where almost every single basic
+operation of the language can be pre-empted. But still, with
+coroutines, every function call becomes a potential pre-emption point.</p>
+
+<h2 id="host-frames-make-coroutines-unportable">Host frames make coroutines unportable</h2>
+
+<p>And then there’s the implementation problem. Unless your JavaScript
+engine doesn’t use a stack (and they all do), coroutines would have to
+be able to save a stack on the heap and restore it back on the stack
+later. But what if JavaScript code calls into code implemented in the
+host language (usually C++)? Some engines implement functions like
+<code class="highlighter-rouge">Array.prototype.forEach</code> in C++. How would they handle code like
+this?</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Fiber</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'wait: '</span> <span class="o">+</span> <span class="nx">x</span><span class="p">);</span>
+        <span class="nx">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'ok: '</span> <span class="o">+</span> <span class="nx">x</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Other languages with coroutines take different approaches.  Lua allows
+implementations to <a href="http://www.lua.org/manual/5.1/manual.html#pdf-coroutine.yield">throw an error</a>
+if user code tries to suspend host activations. This would simply be
+unportable, since different engines would implement different standard
+libraries in C++.</p>
+
+<p>The Scheme community tends to demand a lot from their continuations,
+so they expect functions like <code class="highlighter-rouge">for-each</code> and <code class="highlighter-rouge">map</code> to be
+suspended. This could mean either forcing all the standard libraries
+to be self-hosted, or using more complicated <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.70.9076">implementation strategies</a>
+than traditional stacks.</p>
+
+<p>Simply put: browser vendors are not going to do this. Modern JS
+engines are extraordinary feats of engineering, and rearchitecting
+their entire stack mechanism is just not realistic. Then when you
+consider that these changes could hurt performance of ordinary
+function calls, well… end of discussion.</p>
+
+<h2 id="shallow-coroutines-to-the-rescue">Shallow coroutines to the rescue</h2>
+
+<p>OK, back to the pyramid of doom. It really does kind of suck. I mean,
+you could name and lift out your functions, but then you break up the
+sequential flow even worse, and you get a combinatorial explosion of
+function arguments for all those upvars.</p>
+
+<p>This is why I’m excited about
+<a href="http://wiki.ecmascript.org/doku.php?id=harmony:generators">generators</a>. Generators
+are a lot like coroutines, with one important difference: <em>they only
+suspend their own function activation</em>. In ES6, <code class="highlighter-rouge">yield</code> isn’t a
+function that anyone can use, it’s a built-in operator that only a
+generator function can use. With generators, calling a JS function is
+as benign as it ever was. You never have to worry that a function call
+might <code class="highlighter-rouge">yield</code> and stop you from doing what you were trying to do.</p>
+
+<p>But it’s still possible to build an API similar to node-fibers. This
+is the idea of <a href="https://github.com/dherman/taskjs">task.js</a>. The
+fibers example looks pretty similar in task.js:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Task</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'wait... '</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">);</span>
+    <span class="k">yield</span> <span class="nx">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'ok... '</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">run</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<p>The big difference is that the <code class="highlighter-rouge">sleep</code> function doesn’t <em>implicitly</em>
+yield; instead, it returns a
+<a href="http://blogs.msdn.com/b/ie/archive/2011/09/11/asynchronous-programming-in-javascript-with-promises.aspx">promise</a>. The
+task then <em>explicitly</em> <code class="highlighter-rouge">yield</code>s the promise back to the task.js
+scheduler. When the promise is fulfilled, the scheduler wakes the task
+back up to continue. Hardly any wordier than node-fibers, but with the
+benefit that you can always tell when and what you’re suspending.</p>
+
+<h2 id="coroutines-no-generators-yes">Coroutines no, generators yes</h2>
+
+<p>Coroutines are not going to happen in JavaScript. They would break one
+of the best features of JavaScript: the simplicity of the event loop
+execution model. And the demands they would place on current engines
+for portability are simply unrealistic. But generator functions are
+easy to add to existing engines, they have none of the portability
+issues of coroutines, and they give you just enough power to write
+non-blocking I/O in a synchronous style without being “threads lite.”</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

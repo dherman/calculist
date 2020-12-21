@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>The Little Calculist</title>
+  <meta name="description" content="Dave Herman&#39;s personal blog.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/page4/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="The Little Calculist">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/page4/">
+  <meta property="og:description" content="Dave Herman&#39;s personal blog.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="The Little Calculist">
+  <meta name="twitter:description" content="Dave Herman&#39;s personal blog.">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+
+  
+
+  
+
+  <ul class="post-list">
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2012/07/16/javascripts-two-array-types/">JavaScript’s two array types</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Jul 16, 2012
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>Imagine a <code class="highlighter-rouge">BitSet</code> constructor with an overloaded API for setting bits:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">bits</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BitSet</span><span class="p">();</span>
+
+<span class="nx">bits</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">bits</span><span class="p">.</span><span class="nx">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">17</span><span class="p">]);</span>
+</code></pre>
+</div>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2012/07/16/javascripts-two-array-types/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2012/07/03/tweaking-the-javascript-ast-api/">Tweaking the JavaScript AST API</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Jul 3, 2012
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>A couple years ago I created a <a href="https://developer.mozilla.org/en/SpiderMonkey/Parser_API">JavaScript parser API</a> and implemented SpiderMonkey’s <a href="https://developer.mozilla.org/en/SpiderMonkey/Parser_API#Reflect.parse%28src.5B.2C_options.5D%29">Reflect.parse</a> library. Since then, there have been a couple of pure JavaScript implementations of the API, including Zach Carter’s <a href="https://github.com/zaach/reflect.js">reflect.js</a> and Ariya Hidayat’s <a href="http://esprima.org">Esprima</a> parser.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2012/07/03/tweaking-the-javascript-ast-api/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2012/06/29/static-module-resolution/">Static module resolution</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Jun 29, 2012
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>I haven’t spoken enough about the rationale for declarative, static module resolution in <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ES6 modules</a>. Since multiple module systems exist in pure JS, the concept of modules that involve new syntax is coming across as foreign to people. I’d like to explain the motivation.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2012/06/29/static-module-resolution/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="pagination">
+    
+      <a class="previous" href="/page5">&laquo; Older</a>
+    
+
+    
+      <a class="next" href="/page3">Newer &raquo;</a>
+    
+  </div>
+
+
+
+</div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

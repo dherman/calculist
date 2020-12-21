@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Neon Wants Your Help!</title>
+  <meta name="description" content="My history with Rust goes back a long way. But it was when I really started to understand its enabling potential, its capacity to empower whole groups of people to do things they couldn’t do before, that I just had to find a more direct way to get involved with making that promise a reality. I decided that the best way I could help widen the on-ramp to Rust was to create Neon: a library for conveniently implementing native Node.js modules with Rust instead of C/C++. With Neon, JavaScript programmers can get access to all the power that Rust offers: high-performance native code, convenient multithreading, freedom from memory faults and data races, and access to native libraries and the Cargo ecosystem. And they can do this without throwing away their working apps or existing expertise. In short, my goal with Neon is to make it easy for JavaScript programmers to “dip their toe” into Rust without diving straight into the deep end. We’ve made some great progress recently, with some cool new features including Electron support and a new Task API for asynchronously spawning Rust computations to run in a background thread. But Neon is still a young project, and could use your help to take it to the next level! Neon is still primarily built by me and a small set of contributors, so I’m looking for contributors with a wide range of skills and interests who can join us to take Neon to the next level and eventually grow into a project leadership team. I think we’re onto something exciting here: a chance to build bridges between the JavaScript and Rust worlds and to create opportunities for aspiring new systems programmers. And I hope you’ll consider being a part of it!">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2017/09/25/neon-wants-your-help/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Neon Wants Your Help!">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2017/09/25/neon-wants-your-help/">
+  <meta property="og:description" content="My history with Rust goes back a long way. But it was when I really started to understand its enabling potential, its capacity to empower whole groups of people to do things they couldn’t do before, that I just had to find a more direct way to get involved with making that promise a reality. I decided that the best way I could help widen the on-ramp to Rust was to create Neon: a library for conveniently implementing native Node.js modules with Rust instead of C/C++. With Neon, JavaScript programmers can get access to all the power that Rust offers: high-performance native code, convenient multithreading, freedom from memory faults and data races, and access to native libraries and the Cargo ecosystem. And they can do this without throwing away their working apps or existing expertise. In short, my goal with Neon is to make it easy for JavaScript programmers to “dip their toe” into Rust without diving straight into the deep end. We’ve made some great progress recently, with some cool new features including Electron support and a new Task API for asynchronously spawning Rust computations to run in a background thread. But Neon is still a young project, and could use your help to take it to the next level! Neon is still primarily built by me and a small set of contributors, so I’m looking for contributors with a wide range of skills and interests who can join us to take Neon to the next level and eventually grow into a project leadership team. I think we’re onto something exciting here: a chance to build bridges between the JavaScript and Rust worlds and to create opportunities for aspiring new systems programmers. And I hope you’ll consider being a part of it!">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Neon Wants Your Help!">
+  <meta name="twitter:description" content="My history with Rust goes back a long way. But it was when I really started to understand its enabling potential, its capacity to empower whole groups of people to do things they couldn’t do before...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Neon Wants Your Help!</h1>
+    
+    <p class="post-meta"><time datetime="2017-09-25T03:49:00-07:00" itemprop="datePublished">Sep 25, 2017</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>My history with Rust goes back a long way. But it was when I really started to understand its <a href="https://www.youtube.com/watch?v=ySW6Yk_DerY">enabling potential</a>, its capacity to empower whole groups of people to do things they couldn’t do before, that I just had to find a more direct way to get involved with making that promise a reality.</p>
+
+<p>I decided that the best way I could help widen the on-ramp to Rust was to create <a href="https://www.neon-bindings.com">Neon</a>: a library for conveniently implementing native Node.js modules with Rust instead of C/C++. With Neon, JavaScript programmers can get access to all the power that Rust offers: high-performance native code, convenient multithreading, freedom from memory faults and data races, and access to native libraries and the <a href="https://crates.io">Cargo</a> ecosystem. And they can do this without throwing away their working apps or existing expertise. In short, my goal with Neon is to make it easy for JavaScript programmers to “dip their toe” into Rust without diving straight into the deep end.</p>
+
+<p><img class="right" style="width: 200px; height: 150px;" src="/assets/help-wanted.jpg" /> We’ve made some great progress recently, with some cool new features including <a href="https://guides.neon-bindings.com/electron-apps/">Electron support</a> and a new <a href="https://api.neon-bindings.com/neon/task/">Task API</a> for asynchronously spawning Rust computations to run in a background thread. <strong>But Neon is still a young project, and could use your help to take it to the next level!</strong> Neon is still primarily built by me and a small set of contributors, so <strong>I’m looking for contributors with a wide range of skills and interests</strong> who can join us to take Neon to the next level and eventually <strong>grow into a project leadership team.</strong> I think we’re onto something exciting here: a chance to build bridges between the JavaScript and Rust worlds and to create opportunities for aspiring new systems programmers. And I hope you’ll consider being a part of it!</p>
+
+<!--more-->
+
+<h2 id="and-i-mean-a-wide-range">…And I Mean a Wide Range</h2>
+
+<p>My dream is to make Neon:</p>
+
+<ul>
+  <li><strong>Easy to learn:</strong> The default abstraction layer should be intuitive enough that a newcomer’s first experience coming from JavaScript should be approachable, and there should be documentation and learning materials to smoothe the on-boarding experience.</li>
+  <li><strong>Rock-solid:</strong> Users should feel confident that refactoring their code in Rust should be no more likely to crash their Node server than vanilla JavaScript.</li>
+  <li><strong>Fully-featured:</strong> The Neon API should be able to express everything you could do in JavaScript itself.</li>
+  <li><strong>Stable:</strong> Once we start approaching 1.0, Neon should get on a regular release cycle, with strong commitment to semantic versioning and backwards compatibility.</li>
+</ul>
+
+<p>Just to give you a sense of the many varied kinds of contributions we could use, here’s a taste:</p>
+
+<p><strong>Project management.</strong> We should keep on top of issues and PRs. I would love to set up a regular meeting with anyone who’s willing to help out with this! I could also use help setting up a simple RFC process similar to <a href="https://github.com/rust-lang/rfcs">Rust RFCs</a>, especially for having community discussions around API and workflow design.</p>
+
+<p><strong>Technical writing.</strong> The <a href="https://github.com/neon-bindings/guides">guides</a> are shaping up, but they’re incomplete and one of the most important tools for on-boarding new users. The <a href="https://api.neon-bindings.com">API docs</a> are pretty rudimentary and would benefit from many more examples—we should strive for a high-quality, illustrative example for every single API.</p>
+
+<p><strong>Testing.</strong> The <a href="https://github.com/neon-bindings/neon/tree/master/test">test suite</a> has a decent structure but is not at all complete. We should aim for complete test coverage of the API!</p>
+
+<p><strong>Teaching.</strong> I would love to get some good thinking into how to teach Neon to various audiences, especially people who are new to Rust and systems programming. We could use this to drive the way we structure the guides, tutorial videos, etc.</p>
+
+<p><strong>Windows development.</strong> My primary development machine is Windows these days, but I’m not an expert. I recently <a href="https://github.com/neon-bindings/neon/issues/248">broke our Appveyor builds</a> just to prove it! 😝 We’ve also seen some intermittent hangs in Appveyor builds and I’d love a Windows expert to <a href="https://github.com/neon-bindings/neon/issues/250">do some investigating</a>!</p>
+
+<p><strong>Web development.</strong> The Neon web site is currently a static page. It certainly would be fun to set it up as a Node page using Neon itself! One of the nice dynamic things we could do would be to create a roadmap page like <a href="http://usehelix.com/roadmap">the one Helix has</a>, with automatic tracking of milestone progress using GitHub APIs. We should also set up a Neon project blog with Jekyll and style it consistently with the rest of <a href="https://www.neon-bindings.com">neon-bindings.com</a>.</p>
+
+<p><strong>Ops and automation.</strong> I’ve started an <a href="https://github.com/neon-bindings/neon/issues?q=is%3Aissue+is%3Aopen+label%3Aautomation">automation label</a> in the issues. A fantastic contribution would be an automated <a href="https://github.com/neon-bindings/neon/issues/42">publication script</a> to make releases one-touch. (This is realistically achievable now thanks to some project reorganization.)</p>
+
+<p><strong>Node plugins.</strong> We should explore the possibility of supporting using the new <a href="https://nodejs.org/api/n-api.html">N-API</a> as an alternative backend for the implementation. We wouldn’t be able to move to this as the default backend right away, but it could pave the way for supporting <a href="https://github.com/nodejs/node-chakracore">Node on ChakraCore</a>, and eventually might replace the current backend entirely.</p>
+
+<p><strong>API design.</strong> There are lots of things you can do in JavaScript that you still can’t do in Neon, so there’s plenty of missing APIs to finish. And it’s not too late to make incompatible changes to the API that’s there currently. For example, I’d be especially interested in ideas about making the <a href="https://api.neon-bindings.com/neon/scope/trait.scope"><code class="highlighter-rouge">Scope</code></a> API less awkward, if possible.</p>
+
+<p><strong>Cargo extensions.</strong> So far, the <a href="https://www.npmjs.com/package/neon-cli">neon-cli</a> workflow has been reasonably successful at abstracting away the painful configuration details required to build native Node modules correctly. But the <em>ideal</em> situation would be to allow programmers to just use <code class="highlighter-rouge">cargo build</code>, <code class="highlighter-rouge">cargo run</code>, and the like to build their Neon crates like any other Rust project. The recent discussions around <a href="https://github.com/rust-lang/rfcs/pull/2136">making Cargo extensible</a> open up some exciting possibilities to push in this direction. One of the ways you can indirectly help with Neon is to help that effort.</p>
+
+<p><strong>Macrology.</strong> One of the big, exciting projects we have left is to flesh out the <a href="/blog/2016/04/01/native-js-classes-in-neon/">high-level macro for defining JavaScript classes</a> (and another for defining standalone functions) so users can use simple type annotations to automate conversions between JavaScript and Rust types. We should take inspiration from the design of our sibling project, <a href="http://usehelix.com">Helix</a>!</p>
+
+<p><strong>Systems programming.</strong> One of the biggest challenges we have to tackle is making the process of shipping Neon libraries practical, especially for shipping prebuilt binaries. One technique we can explore is to create an ABI-stable middle layer so that Neon binaries don’t need to be rebuilt for different versions of Node.</p>
+
+<p><strong>Threading architectures.</strong> Currently, Neon supports a couple of forms of threading: pausing the JavaScript VM to synchronously run a parallelized Rust computation (via the <a href="https://api.neon-bindings.com/neon/vm/trait.lock"><code class="highlighter-rouge">Lock</code></a> API), and running a background <a href="https://api.neon-bindings.com/neon/task/trait.task"><code class="highlighter-rouge">Task</code></a> as part of the <a href="http://docs.libuv.org/en/v1.x/threadpool.html">libuv thread pool</a>. There’s more we can do both on the computation side (for example, supporting <a href="https://github.com/neon-bindings/neon/issues/228">attaching to different threads than libuv’s pool</a>) and the data side (for example, supporting <a href="https://v8docs.nodesource.com/node-8.0/d5/d6e/classv8_1_1_array_buffer.html#a9291f6ac203b9ceae83f7f17d39ecb59"><code class="highlighter-rouge">ArrayBuffer</code> transfer</a>).</p>
+
+<h2 id="getting-involved">Getting Involved</h2>
+
+<p>Does any of these sound like something you’d be interested in? Or maybe you have other ideas! If you want to help, come talk to me (<strong>@dherman</strong>) in the <a href="https://rust-bindings.slack.com/messages/neon"><code class="highlighter-rouge">#neon</code> community Slack channel</a> (make sure to get an <a href="https://rust-bindings-slackin.herokuapp.com/">automatic invite</a> first).</p>
+
+<h2 id="-a-note-about-community"><img class="right" style="width: 184px; height: 128px;" src="/assets/come-in.png" /> A Note About Community</h2>
+
+<p>As the original creator of this project, I’m responsible not only for the software but for the community I foster. I <em>deeply love</em> this part of open source, and I don’t take the responsibility lightly.</p>
+
+<p>Neon has a ton of cool tech inside of it, and if that’s the only aspect you’re interested in, that’s totally OK. Not everyone needs to be passionate about community-building. Still, not unlike Rust, this whole project’s purpose is to <strong>widen the circle of tech and empower new systems programmers.</strong> So I ask of everyone who participates in the Neon project to strive to act in ways that will encourage and motivate as many people as possible to participate.</p>
+
+<p>Concretely, Neon uses the <a href="https://www.contributor-covenant.org/">Contributor Covenant</a> to frame the expectations and standards of how we treat people in our community. Behind the policies is a simple goal: to <strong>make our community a place that welcomes, trusts, supports, and empowers one another.</strong></p>
+
+<p>If that sounds good to you, wanna come join us?</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

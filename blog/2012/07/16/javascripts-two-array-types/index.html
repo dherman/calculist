@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>JavaScript’s two array types</title>
+  <meta name="description" content="Imagine a BitSet constructor with an overloaded API for setting bits: var bits = new BitSet(); bits.set(4); bits.set([1, 4, 8, 17]);">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2012/07/16/javascripts-two-array-types/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="JavaScript’s two array types">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2012/07/16/javascripts-two-array-types/">
+  <meta property="og:description" content="Imagine a BitSet constructor with an overloaded API for setting bits: var bits = new BitSet(); bits.set(4); bits.set([1, 4, 8, 17]);">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="JavaScript’s two array types">
+  <meta name="twitter:description" content="Imagine a BitSet constructor with an overloaded API for setting bits: var bits = new BitSet(); bits.set(4); bits.set([1, 4, 8, 17]);">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">JavaScript’s two array types</h1>
+    
+    <p class="post-meta"><time datetime="2012-07-16T08:06:00-07:00" itemprop="datePublished">Jul 16, 2012</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Imagine a <code class="highlighter-rouge">BitSet</code> constructor with an overloaded API for setting bits:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">bits</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BitSet</span><span class="p">();</span>
+
+<span class="nx">bits</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">bits</span><span class="p">.</span><span class="nx">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">17</span><span class="p">]);</span>
+</code></pre>
+</div>
+
+<!--more-->
+
+<p>The interface for <code class="highlighter-rouge">BitSet.prototype.set</code> is:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// set :: (number | [number]) -&gt; undefined</span>
+</code></pre>
+</div>
+
+<p>Now imagine a <code class="highlighter-rouge">StringSet</code> constructor with an overloaded API for adding strings:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">set</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StringSet</span><span class="p">();</span>
+
+<span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">([</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">]);</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">baz</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+</code></pre>
+</div>
+
+<p>The interface for <code class="highlighter-rouge">StringSet.prototype.add</code> is something like:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// add :: (string | [string] | object) -&gt; undefined</span>
+</code></pre>
+</div>
+
+<p>These both look pretty similar, but there’s a critical difference. Think about how you might implement <code class="highlighter-rouge">BitSet.prototype.set</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">BitSet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">set</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// number case</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s1">'number'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_add1</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// array case</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_add1</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Now think about how you might implement <code class="highlighter-rouge">StringSet.prototype.add</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">StringSet</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// string case</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="s1">'string'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_add1</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// array case</span>
+    <span class="k">if</span> <span class="p">(</span><span class="cm">/* hmmmm... */</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_add1</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// object case</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">({}.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_add1</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>What’s the difference? <code class="highlighter-rouge">BitSet.prototype.set</code> doesn’t have to test whether its argument is an array. It’ll work for any object that acts like an array (i.e., has indexed properties and a numeric <code class="highlighter-rouge">length</code> property). It’ll even accept values like an <code class="highlighter-rouge">arguments</code> object, a <code class="highlighter-rouge">NodeList</code>, some custom object you create that acts like an array, or even a primitive string.</p>
+
+<p>But <code class="highlighter-rouge">StringSet.prototype.add</code> actually needs a test to see if <code class="highlighter-rouge">x</code> is an array. How do you distinguish between arrays and objects when JavaScript arrays <em>are</em> objects?</p>
+
+<p>One answer you’ll sometimes see is what I call “duck testing”: use some sort of heuristic that <em>probably</em> indicates the client intended the argument to be an array:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="s1">'number'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Beware the word “probably” in programming! Duck testing is a horribly medieval form of computer science:</p>
+
+<iframe class="video" width="640" height="390" src="http://www.youtube.com/embed/zrzMhU_4m-g" frameborder="0" allowfullscreen=""></iframe>
+
+<p>For example, what happens when a user happens to pass in a dictionary object with the string <code class="highlighter-rouge">'length'</code>?</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">symbolTable</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">i</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">length</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
+</code></pre>
+</div>
+
+<p>The user clearly intended this to be the dictionary case, but the duck test saw a numeric <code class="highlighter-rouge">'length'</code> property and gleefully proclaimed “it’s an array!”</p>
+
+<p>This comes down to the difference between <em>nominal</em> and <em>structural</em> types.</p>
+
+<p>A <strong>nominal type</strong> is a type that has a unique identity or “brand.” It carries a tag with it that can be atomically tested to distinguish it from other types.</p>
+
+<p>A <strong>structural type</strong>, also known as a duck type, is a kind of interface: it’s just a contract that mandates certain behaviors, but doesn’t say anything about what specific implementation is used to provide that behavior. The reason people have such a hard time figuring out how to test for structural types is that they are designed specifically <em>not to be testable</em>!</p>
+
+<p>There are a few common scenarios in dynamically typed languages where you need to do dynamic type testing, such as error checking, debugging, and inrospection. But the most common case is when implementing overloaded API’s like the <code class="highlighter-rouge">set</code> and <code class="highlighter-rouge">add</code> methods above.</p>
+
+<p>The <code class="highlighter-rouge">BitSet.prototype.set</code> method treats arrays as a structural type: they can be any kind of value whatsoever as long as they have indexed properties with corresponding <code class="highlighter-rouge">length</code>. But <code class="highlighter-rouge">StringSet.prototype.add</code> overloads array and object types, so it has to check for “arrayness.” And you can’t reliably check for structural types.</p>
+
+<p>It’s specifically when you <strong>overload arrays and objects</strong> that you need a predictable nominal type test. One answer would be to punt and change the API so the client has to explicitly tag the variants:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="na">key</span><span class="p">:</span> <span class="s1">'foo'</span> <span class="p">});</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="na">array</span><span class="p">:</span> <span class="p">[</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">]</span> <span class="p">});</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="na">dict</span><span class="p">:</span> <span class="p">{</span> <span class="na">foo</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">baz</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span> <span class="p">});</span>
+</code></pre>
+</div>
+
+<p>This overloads three different objects types that can be distinguished by their relevant property names. Or you could get rid of overloading altogether:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">set</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">);</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">addArray</span><span class="p">([</span><span class="s1">'foo'</span><span class="p">,</span> <span class="s1">'bar'</span><span class="p">,</span> <span class="s1">'baz'</span><span class="p">]);</span>
+<span class="nx">set</span><span class="p">.</span><span class="nx">addDict</span><span class="p">({</span> <span class="na">foo</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">baz</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+</code></pre>
+</div>
+
+<p>But these API’s are heavier and clunkier. Rather than rigidly avoiding overloading arrays and objects, the lighter-weight approach is to use JavaScript’s latent notion of a “true” array: an object whose <a href="http://es5.github.com/#x8.6.2">[[Class]] internal property</a> is <code class="highlighter-rouge">"Array"</code>. That internal property serves as the brand for a built-in nominal type of JavaScript. And it’s a pretty good candidate for a universally available nominal type: clients get the concise array literal syntax, and the ES5 <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/isArray">Array.isArray</a> function (which can be <a href="http://perfectionkills.com/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/">shimmed pretty reliably</a> in older JavaScript engines) provides the exact test needed to implement the API.</p>
+
+<p>But this test is very different from the structural type accepted by <code class="highlighter-rouge">BitSet.prototype.set</code>. For example, you can’t pass an <code class="highlighter-rouge">arguments</code> object to <code class="highlighter-rouge">StringSet.prototype.add</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">MyClass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">wibbles</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>This code clearly means to pass <code class="highlighter-rouge">arguments</code> as an array, but it’ll get interpreted as a dictionary. Similarly, you can’t pass a <code class="highlighter-rouge">NodeList</code>, or a primitive string, or any other JavaScript value that acts array-like.</p>
+
+<p>In other words, <strong>JavaScript has <em>two</em> latent concepts of array types</strong>. Library writers should clearly document when their API’s accept any <em>array-like</em> value (i.e., the structural type) and when they require a true array (i.e., the nominal type). That way clients know whether they need to convert array-like values to true arrays before passing them in.</p>
+
+<p>As a final note, ES6’s <a href="http://wiki.ecmascript.org/doku.php?id=strawman:array_extras">Array.from</a> API will do that exact conversion. This would make it very convenient, for example, for the <code class="highlighter-rouge">update</code> method above to be fixed:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">MyClass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">wibbles</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">arguments</span><span class="p">));</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p><em>Thanks to Rick Waldron for helping me come to this understanding during an awesome IRC conversation this morning.</em></p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>The Little Calculist</title>
+  <meta name="description" content="Dave Herman&#39;s personal blog.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/page2/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="The Little Calculist">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/page2/">
+  <meta property="og:description" content="Dave Herman&#39;s personal blog.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="The Little Calculist">
+  <meta name="twitter:description" content="Dave Herman&#39;s personal blog.">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+
+  
+
+  
+
+  <ul class="post-list">
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2016/04/01/native-js-classes-in-neon/">Native JS Classes in Neon</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Apr 1, 2016
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>Last weekend I <a href="https://github.com/rustbridge/neon/pull/58">landed a PR</a> that adds support for defining custom native classes in <a href="/blog/2015/12/23/neon-node-rust/">Neon</a>. This means you can create JavaScript objects that internally wrap—and <a href="https://doc.rust-lang.org/book/ownership.html">own</a>—a Rust data structure, along with methods that can safely access the internal Rust data.</p>
+
+<p>As a quick demonstration, suppose you have an <code class="highlighter-rouge">Employee</code> struct defined in Rust:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">Employee</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="c">// etc ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2016/04/01/native-js-classes-in-neon/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2015/12/23/neon-node-rust/">Neon: Node + Rust = 💖</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Dec 23, 2015
+            
+               •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p>If you’re a JavaScript programmer who’s been intrigued by Rust’s <a href="http://blog.rust-lang.org/2015/08/14/Next-year.html"><em>hack without fear</em></a> theme—making systems programming safe and fun—but you’ve been waiting for inspiration, I may have something for you! I’ve been working on <a href="https://github.com/dherman/neon">Neon</a>, a set of APIs and tools for <strong>making it super easy to write native Node modules in Rust</strong>.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2015/12/23/neon-node-rust/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            
+              <a class="post-link" href="/blog/2014/12/08/mozlandia/">Why Mozlandia Was So Effective</a>
+            
+          </h1>
+
+          <p class="post-meta">
+            Dec 8, 2014
+            
+               •
+  
+    
+    
+  
+
+
+
+
+            
+            
+          </p>
+        </header>
+
+        <div class="post-content">
+          <p><img class="right" style="width: 225px; height: 226px;" src="/assets/mozlanyardia.jpg" /> When Chris Beard first announced that over a thousand Mozilla staff and contributors would be descending on Portland this month for an <a href="https://twitter.com/search?q=%23mozlandia">all-hands work week</a>, I worried about two things. I knew a couple of the groups in my department would be approaching deadlines. And I was afraid that so many groups of people in one place would be chaotic and hard to coordinate. I wasn’t even wrong – but it didn’t matter.</p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/blog/2014/12/08/mozlandia/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="pagination">
+    
+      <a class="previous" href="/page3">&laquo; Older</a>
+    
+
+    
+      <a class="next" href="/">Newer &raquo;</a>
+    
+  </div>
+
+
+
+</div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

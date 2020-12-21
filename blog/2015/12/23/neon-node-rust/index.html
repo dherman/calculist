@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Neon: Node + Rust = 💖</title>
+  <meta name="description" content="If you’re a JavaScript programmer who’s been intrigued by Rust’s hack without fear theme—making systems programming safe and fun—but you’ve been waiting for inspiration, I may have something for you! I’ve been working on Neon, a set of APIs and tools for making it super easy to write native Node modules in Rust.">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2015/12/23/neon-node-rust/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Neon: Node + Rust = 💖">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2015/12/23/neon-node-rust/">
+  <meta property="og:description" content="If you’re a JavaScript programmer who’s been intrigued by Rust’s hack without fear theme—making systems programming safe and fun—but you’ve been waiting for inspiration, I may have something for you! I’ve been working on Neon, a set of APIs and tools for making it super easy to write native Node modules in Rust.">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Neon: Node + Rust = 💖">
+  <meta name="twitter:description" content="If you’re a JavaScript programmer who’s been intrigued by Rust’s hack without fear theme—making systems programming safe and fun—but you’ve been waiting for inspiration, I may have something for yo...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Neon: Node + Rust = 💖</h1>
+    
+    <p class="post-meta"><time datetime="2015-12-23T07:30:00-08:00" itemprop="datePublished">Dec 23, 2015</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>If you’re a JavaScript programmer who’s been intrigued by Rust’s <a href="http://blog.rust-lang.org/2015/08/14/Next-year.html"><em>hack without fear</em></a> theme—making systems programming safe and fun—but you’ve been waiting for inspiration, I may have something for you! I’ve been working on <a href="https://github.com/dherman/neon">Neon</a>, a set of APIs and tools for <strong>making it super easy to write native Node modules in Rust</strong>.</p>
+
+<!--more-->
+
+<p><strong>TL;DR:</strong></p>
+
+<ul>
+  <li><a href="https://github.com/dherman/neon">Neon</a> is an API for writing fast, crash-free native Node modules in Rust;</li>
+  <li>Neon enables Rust’s parallelism with guaranteed thread safety;</li>
+  <li><a href="https://github.com/dherman/neon-cli">Neon-cli</a> makes it easy to create a Neon project and get started; and finally…</li>
+  <li>Help wanted!</li>
+</ul>
+
+<h2 id="i-can-rust-and-so-can-you">I Can Rust and So Can You!</h2>
+
+<p>I wanted to make it as easy as possible to get up and running, so I built <a href="https://github.com/dherman/neon-cli">neon-cli</a>, a command-line tool that lets you generate a complete Neon project skeleton with one simple command and build your entire project with nothing more than the usual <code class="highlighter-rouge">npm install</code>.</p>
+
+<p>If you want to try building your first native module with Neon, <strong>it’s super easy</strong>: install <a href="https://github.com/dherman/neon-cli">neon-cli</a> with <code class="highlighter-rouge">npm install -g neon-cli</code>, then create, build, and run your new project:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>% neon new hello
+...follow prompts...
+% cd hello
+% npm install
+% node -e 'require("./")'
+</code></pre>
+</div>
+
+<p>If you don’t believe me, I made a <a href="https://raw.githubusercontent.com/dherman/neon-cli/master/screencast.gif">screencast</a>, so you <em>know</em> I’m legit.</p>
+
+<h2 id="i-take-thee-at-thy-word">I Take Thee at thy Word</h2>
+
+<p>To illustrate what you can do with Neon, I created a little <a href="https://github.com/dherman/wc-demo">word counting demo</a>. The demo is simple: read in the complete plays of Shakespeare and count the total number of occurrences of the word “thee”. First I tried implementing it in pure JS. The top-level code splits the corpus into lines, and sums up the counts for each line:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">search</span><span class="p">(</span><span class="nx">corpus</span><span class="p">,</span> <span class="nx">search</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">ls</span> <span class="o">=</span> <span class="nx">lines</span><span class="p">(</span><span class="nx">corpus</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">ls</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">total</span> <span class="o">+=</span> <span class="nx">wcLine</span><span class="p">(</span><span class="nx">ls</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">search</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">total</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Searching an individual line involves splitting the line up into word and matching each word against the search string:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">wcLine</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="nx">search</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="nx">line</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">words</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">matches</span><span class="p">(</span><span class="nx">words</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">search</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">total</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">total</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The rest of the details are pretty straightforward but definitely <a href="https://github.com/dherman/wc-demo/blob/master/lib/search.js">check out the code</a>—it’s small and self-contained.</p>
+
+<p>On my laptop, running the algorithm across all the plays of Shakespeare usually takes about 280 – 290ms. Not hugely expensive, but slow enough to be optimizable.</p>
+
+<h2 id="fall-into-our-rustic-revelry">Fall Into our Rustic Revelry</h2>
+
+<p>One of the amazing things about Rust is that highly efficient code can still be remarkably compact and readable. In the <a href="https://github.com/dherman/wc-demo/blob/master/src/lib.rs">Rust version of the algorithm</a>, the code for summing up the counts for all the lines looks pretty similar to the JS code:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="k">mut</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">word</span> <span class="n">in</span> <span class="n">line</span><span class="nf">.split</span><span class="p">(</span><span class="sc">' '</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nf">matches</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">search</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">total</span> <span class="c">// in Rust you can omit `return` for a trailing expression</span>
+</code></pre>
+</div>
+
+<p>In fact, that same code can be written at a higher level of abstraction <em>without losing performance</em>, using iteration methods like <a href="http://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter"><code class="highlighter-rouge">filter</code></a> and <a href="http://doc.rust-lang.org/std/iter/trait.Iterator.html#method.fold"><code class="highlighter-rouge">fold</code></a> (similar to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"><code class="highlighter-rouge">Array.prototype.filter</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce"><code class="highlighter-rouge">Array.prototype.reduce</code></a> in JS):</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="n">line</span><span class="nf">.split</span><span class="p">(</span><span class="sc">' '</span><span class="p">)</span>
+    <span class="nf">.filter</span><span class="p">(|</span><span class="n">word</span><span class="p">|</span> <span class="nf">matches</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">search</span><span class="p">))</span>
+    <span class="nf">.fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">|</span><span class="n">sum</span><span class="p">,</span> <span class="n">_</span><span class="p">|</span> <span class="n">sum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>In my quick experiments, that even seems to shave a few milliseconds off the total running time. I think this is a nice demonstration of the power of Rust’s <a href="http://blog.rust-lang.org/2015/05/11/traits.html">zero-cost abstractions</a>, where idiomatic and high-level abstractions produce the same or sometimes even better performance (by making additional optimizations possible, like eliminating bounds checks) than lower-level, more obscure code.</p>
+
+<p>On my machine, the simple Rust translation runs in about 80 – 85ms. Not bad—about 3x as fast just from using Rust, and in roughly the same number of lines of code (60 in JS, 70 in Rust). BTW, I’m being approximate here with the numbers, because this isn’t a remotely scientific benchmark. My goal is just to demonstrate that you <em>can</em> get significant performance improvements from using Rust; in any given situation, the particular details will of course matter.</p>
+
+<h2 id="their-thread-of-life-is-spun">Their Thread of Life is Spun</h2>
+
+<p>We’re not done yet, though! Rust enables something even cooler for Node: we can easily and safely parallelize this code—and I mean <a href="http://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html">without the night-sweats and palpitations usually associated with multithreading</a>. Here’s a quick look at the top level logic in the Rust implementation of the demo:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="n">total</span> <span class="o">=</span> <span class="nn">vm</span><span class="p">::</span><span class="nf">lock</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="p">|</span><span class="n">data</span><span class="p">|</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">corpus</span> <span class="o">=</span> <span class="n">data</span><span class="nf">.as_str</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">lines</span> <span class="o">=</span> <span class="nf">lines</span><span class="p">(</span><span class="n">corpus</span><span class="p">);</span>
+    <span class="n">lines</span><span class="nf">.into_iter</span><span class="p">()</span>
+         <span class="nf">.map</span><span class="p">(|</span><span class="n">line</span><span class="p">|</span> <span class="nf">wc_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">search</span><span class="p">))</span>
+         <span class="nf">.fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">|</span><span class="n">sum</span><span class="p">,</span> <span class="n">line</span><span class="p">|</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">vm::lock</code> API lets Neon safely expose the raw bytes of a Node <code class="highlighter-rouge">Buffer</code> object (i.e., a typed array) to Rust threads, by preventing JS from running in the meantime. And Rust’s concurrency model makes programming with threads <em>actually fun</em>.</p>
+
+<p>To demonstrate how easy this can be, I used <a href="http://smallcultfollowing.com/babysteps/blog/2015/12/18/rayon-data-parallelism-in-rust/">Niko Matsakis’s new Rayon crate</a> of beautiful data parallelism abstractions. Changing the demo to use Rayon is as simple as replacing the <code class="highlighter-rouge">into_iter</code>/<code class="highlighter-rouge">map</code>/<code class="highlighter-rouge">fold</code>/ lines above with:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="n">lines</span><span class="nf">.into_par_iter</span><span class="p">()</span>
+     <span class="nf">.map</span><span class="p">(|</span><span class="n">line</span><span class="p">|</span> <span class="nf">wc_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">search</span><span class="p">))</span>
+     <span class="nf">.sum</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Keep in mind, Rayon wasn’t designed with Neon in mind—its generic primitives match the iteration protocols of Rust, so Neon was able to just pull it off the shelf.</p>
+
+<p>With that simple change, on my two-core MacBook Air, the demo goes from about 85ms down to about 50ms.</p>
+
+<h2 id="bridge-most-valiantly-with-excellent-discipline">Bridge Most Valiantly, with Excellent Discipline</h2>
+
+<p>I’ve worked on making the integration as seamless as possible. From the Rust side, Neon functions follow a simple protocol, taking a <code class="highlighter-rouge">Call</code> object and returning a JavaScript value:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">search</span><span class="p">(</span><span class="n">call</span><span class="p">:</span> <span class="n">Call</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">JS</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">call</span><span class="py">.scope</span><span class="p">;</span>
+    <span class="c">// ...</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="nn">Integer</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">total</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">scope</code> object safely tracks handles into V8’s garbage-collected heap. The Neon API uses the Rust type system to guarantee that your native module can’t crash your app by mismanaging object handles.</p>
+
+<p>From the JS side, loading the native module is straightforward:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">myNeonModule</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'neon-bridge'</span><span class="p">).</span><span class="nx">load</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<h2 id="wherefores-this-noise">Wherefore’s this Noise?</h2>
+
+<p>Hopefully this demo is enough to get people interested. Beyond the sheer fun of it, I think the strongest reasons for using Rust in Node are performance and parallelism. As the Rust ecosystem grows, it’ll also be a way to give Node access to cool Rust libraries. Beyond that, I’m hoping that Neon can make a nice abstraction layer that just makes writing native Node modules less painful. With projects like <a href="https://blogs.windows.com/buildingapps/2015/05/12/bringing-node-js-to-windows-10-iot-core/">node-uwp</a> it might even be worth exploring evolving Neon towards a JS-engine-agnostic abstraction layer.</p>
+
+<p>There are lots of possibilities, but <a href="https://github.com/dherman/neon">I need help!</a> If you want to get involved, I’ve created a <a href="http://rustbridge.slack.com">community slack</a> (grab an invite from <a href="http://rustbridge-community-slackin.herokuapp.com">the Slackin app</a>) and a <code class="highlighter-rouge">#neon</code> IRC channel on <a href="https://wiki.mozilla.org/IRC">Mozilla IRC</a> (<code class="highlighter-rouge">irc.mozilla.org</code>).</p>
+
+<h2 id="a-quick-thanks">A Quick Thanks</h2>
+
+<p>There’s a ton of fun exploration and work left to do but I couldn’t have gotten this far without huge amounts of help already: <a href="http://oppenlander.me/articles/rust-ffi">Andrew Oppenlander’s blog post</a> got me off the ground, Ben Noordhuis and Marcin Cieślak helped me wrestle with V8’s tooling, I picked up a few tricks from Nathan Rajlich’s <a href="https://github.com/TooTallNate/node-bindings/blob/master/bindings.js">evil genius code</a>, Adam Klein and Fedor Indutny helped me understand the V8 API, Alex Crichton helped me with compiler and linker arcana, Niko Matsakis helped me with designing the safe memory management API, and Yehuda Katz helped me with the overall design.</p>
+
+<p>You know what this means? <a href="https://github.com/dherman/neon"><strong>Maybe you can help too!</strong></a></p>
+
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

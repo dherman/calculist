@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Homoiconicity isn’t the point</title>
+  <meta name="description" content="I’ve never really understood what “homoiconic” is supposed to mean. People often say something like “the syntax uses one of the language’s basic data structures.” That’s a category error: syntax is not a data structure, it’s just a representation of data as text. Or you hear “the syntax of the language is the same as the syntax of its data structures.” But S-expressions don’t “belong” to Lisp; there’s no reason why Perl or Haskell or JavaScript couldn’t have S-expression libraries. And every parser generates a data structure, so if you have a Python parser in Python, then is Python homoiconic? Is JavaScript?">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2012/04/17/homoiconicity-isnt-the-point/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Homoiconicity isn’t the point">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2012/04/17/homoiconicity-isnt-the-point/">
+  <meta property="og:description" content="I’ve never really understood what “homoiconic” is supposed to mean. People often say something like “the syntax uses one of the language’s basic data structures.” That’s a category error: syntax is not a data structure, it’s just a representation of data as text. Or you hear “the syntax of the language is the same as the syntax of its data structures.” But S-expressions don’t “belong” to Lisp; there’s no reason why Perl or Haskell or JavaScript couldn’t have S-expression libraries. And every parser generates a data structure, so if you have a Python parser in Python, then is Python homoiconic? Is JavaScript?">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Homoiconicity isn’t the point">
+  <meta name="twitter:description" content="I’ve never really understood what “homoiconic” is supposed to mean. People often say something like “the syntax uses one of the language’s basic data structures.” That’s a category error: syntax is...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Homoiconicity isn’t the point</h1>
+    
+    <p class="post-meta"><time datetime="2012-04-17T00:51:00-07:00" itemprop="datePublished">Apr 17, 2012</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>I’ve never really understood what “homoiconic” is supposed to mean. People often say something like “the syntax uses one of the language’s basic data structures.” That’s a category error: syntax is not a data structure, it’s just a representation of data as text. Or you hear “<a href="http://smallcultfollowing.com/babysteps/blog/2012/04/15/syntax-matters-dot-dot-dot/">the syntax of the language is the same as the syntax of its data structures</a>.” But S-expressions don’t “belong” to Lisp; there’s no reason why Perl or Haskell or JavaScript couldn’t have S-expression libraries. And every parser generates a data structure, so if you have a <a href="http://docs.python.org/library/parser.html">Python parser in Python</a>, then is Python homoiconic? Is <a href="http://esprima.org/">JavaScript</a>?</p>
+
+<!--more-->
+
+<p>Maybe there’s a more precise way to define homoiconicity, but frankly I think it misses the point. What makes Lisp’s syntax powerful is not the fact that it can be represented as a data structure, it’s that <strong>it’s possible to <em>read</em> it without &lt;/em&gt;parsing&lt;/em&gt;</strong>.</p>
+
+<p>Wait, what?</p>
+
+<p>It’s hard to explain these concepts with traditional terminology, because the distinction between reading and parsing simply doesn’t exist for languages without macros.</p>
+
+<h3 id="parsing-vs-reading-the-compilers-view">Parsing vs reading: the compiler’s view</h3>
+
+<p>In almost every non-Lispy language ever, the front end of every interpreter and compiler looks pretty much the same:</p>
+
+<p><img src="/assets/parse-pipeline.png" alt="traditional parsing pipeline" /></p>
+
+<p>Take the text, run it through a parser, and you get out an AST. But that’s not how it works when you have macros. You simply can’t produce an AST without expanding macros first. So the front-end of a Lispy language usually looks more like:</p>
+
+<p><img src="/assets/macro-pipeline.png" alt="macro pipeline" /></p>
+
+<p>What’s this intermediate syntax tree? It’s an almost entirely superficial understanding of your program: it basically does paren-matching to create a tree representing the surface nesting structure of the text. This is nowhere near an AST, but it’s just enough for the macro expansion system to do its job.</p>
+
+<h3 id="parsing-vs-reading-the-macro-expanders-view">Parsing vs reading: the macro expander’s view</h3>
+
+<p>If you see this statement in the middle of a JavaScript program:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>you know for sure that it’s a <em>ForInStatement</em>, as defined by the spec (I’m using <code class="highlighter-rouge">let</code> because… ES6, that’s why). If you know the grammar of JavaScript, you know the entire structure of the statement. But in Scheme, we could implement <code class="highlighter-rouge">for</code> as a macro. When the macro expander encounters:</p>
+
+<div class="language-scheme highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">key</span> <span class="nv">obj</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">print</span> <span class="nv">key</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>it knows nothing about the contents of the expression. All it knows is the macro definition of <code class="highlighter-rouge">for</code>. But that’s all it needs to know! The expander just takes the two subtrees, <code class="highlighter-rouge">(key obj)</code> and <code class="highlighter-rouge">(print key)</code>, and passes them as arguments to the <code class="highlighter-rouge">for</code> macro.</p>
+
+<h3 id="parsing-vs-reading-the-macros-view">Parsing vs reading: the macro’s view</h3>
+
+<p>Here’s a simple <code class="highlighter-rouge">for</code> macro, written in <a href="http://docs.racket-lang.org/guide/pattern-macros.html#%28part._define-syntax-rule%29">Racket</a>:</p>
+
+<div class="language-racket highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">define-syntax-rule</span> <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">x</span> <span class="nv">e1</span><span class="p">)</span> <span class="nv">e2</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">for-each</span> <span class="p">(</span><span class="k">λ</span> <span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="nv">e2</span><span class="p">)</span> <span class="nv">e1</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>This macro works by <a href="http://en.wikipedia.org/wiki/Pattern_matching">pattern matching</a>: it expects two sub-trees, the first of which can itself be broken down into two identifier nodes <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">e1</code>, and it expands into the <code class="highlighter-rouge">for-each</code> expression. So when the expander calls the macro with the above example, the result of expansion is:</p>
+
+<div class="language-racket highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="nb">for-each</span> <span class="p">(</span><span class="k">λ</span> <span class="p">(</span><span class="nf">key</span><span class="p">)</span> <span class="p">(</span><span class="nb">print</span> <span class="nv">key</span><span class="p">))</span> <span class="nv">obj</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="the-power-of-the-parenthesis">The power of the parenthesis</h3>
+
+<p>If you’ve ever wondered why Lisp weirdos are so inexplicably attached to their parentheses, this is what it’s all about. Parentheses make it unambiguous for the expander to understand what the arguments to a macro are, because <strong>it’s always clear where the arguments begin and end</strong>. It knows this without needing to understand anything about what the macro definition is going to do. Imagine trying to define a macro expander for a language with syntax like JavaScript’s. What should the expander do when it sees:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">quux</span> <span class="p">(</span><span class="nx">mumble</span><span class="p">,</span> <span class="nx">flarg</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="p">{</span> <span class="nl">foo</span><span class="p">:</span> <span class="mi">3</span> <span class="p">}</span> <span class="nx">grunch</span> <span class="o">/</span><span class="nx">wibble</span><span class="o">/</span><span class="nx">i</span>
+</code></pre>
+</div>
+
+<p>How many arguments does <code class="highlighter-rouge">quux</code> take? Is the curly-braced argument a block statement or an object literal? Is the thing at the end an arithmetic expression or a regular expression literal? These are all questions that can’t be answered in JavaScript without knowing your parsing context — and macros obscure the parsing context.</p>
+
+<p>None of this is to say that it’s <em>impossible</em> to design a macro system for languages with non-Lispy syntax. My point is just that the power of Lisp’s (Scheme’s, Racket’s, Clojure’s, …) macros comes not from being somehow tied to a central data structure of the language, but rather to the expander’s ability to break up a macro call into its separate arguments and then let the macro do all the work of parsing those arguments. In other words, <strong>homoiconicity isn’t the point, <code>read</code> is</strong>.</p>
+
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

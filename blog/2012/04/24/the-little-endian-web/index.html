@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>The little-endian web?</title>
+  <meta name="description" content="Here’s the deal: typed arrays are not fully portable. On most browsers, this code will print 1: var a1 = new Uint32Array([1]); var a2 = new Uint8Array(a1.buffer); console.log(a2[0])">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2012/04/24/the-little-endian-web/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="The little-endian web?">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2012/04/24/the-little-endian-web/">
+  <meta property="og:description" content="Here’s the deal: typed arrays are not fully portable. On most browsers, this code will print 1: var a1 = new Uint32Array([1]); var a2 = new Uint8Array(a1.buffer); console.log(a2[0])">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="The little-endian web?">
+  <meta name="twitter:description" content="Here’s the deal: typed arrays are not fully portable. On most browsers, this code will print 1: var a1 = new Uint32Array([1]); var a2 = new Uint8Array(a1.buffer); console.log(a2[0])">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">The little-endian web?</h1>
+    
+    <p class="post-meta"><time datetime="2012-04-24T15:32:00-07:00" itemprop="datePublished">Apr 24, 2012</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Here’s the deal: <a href="http://www.khronos.org/registry/typedarray/specs/latest/">typed arrays</a> are not fully portable. On most browsers, this code will print 1:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint32Array</span><span class="p">([</span><span class="mi">1</span><span class="p">]);</span>
+<span class="kd">var</span> <span class="nx">a2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">a1</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<!--more-->
+
+<p>But the typed arrays spec doesn’t specify a byte order. So a browser on a big-endian system (say, a PowerPC console like Xbox or PS3) is allowed to print 0. In short: <strong>casting an <code class="highlighter-rouge">ArrayBuffer</code> to different types is unportable by default.</strong> It’s up to web developers to canonicalize bytes for different architectures.</p>
+
+<p><img class="right" src="/assets/nuxi.jpg" /> Now, we could just require typed arrays to be little-endian, once and for all. After all, almost all platforms are little-endian these days. The few big-endian platforms could just automatically reorder bytes for all typed array accesses. But this would have to be made to work with WebGL, which works by sending application-generated buffers to the GPU. In order to make this work on a big-endian architecture, little-endian-encoded <code class="highlighter-rouge">ArrayBuffer</code> data would need to be translated when sending back and forth to the GPU. Technically, <a href="http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-March/035236.html">this might be possible</a>, but there’s really no evidence that it would have acceptable performance.</p>
+
+<p>On the other hand, can we really trust that web applications will write portable code? Imagine a <a href="http://blog.faultylabs.com/files/md5.js">hashing algorithm</a> that builds an internal <code class="highlighter-rouge">ArrayBuffer</code> and casts it to different types. If the code isn’t written portably, it’ll break on a browser implementing big-endian typed arrays.</p>
+
+<p>This leaves big-endian browsers with a <strong>nasty decision</strong>: try to emulate little-endian typed arrays to protect against unportable application logic, and suffer the complexity and performance costs of translating data back and forth to the GPU, or just hope that not too many web pages break. Or perhaps surface an annoying decision to users: do you want to run this application in fast mode or correct mode?</p>
+
+<p>For now, we should let browser vendors on big-endian systems make that decision, and not force the decision through the spec. If they end up all choosing to emulate little-endian, I’ll be happy to codify that in the standards. As I understand it, <a href="http://www.floodgap.com/software/tenfourfox/">TenFourFox</a> can’t support WebGL, so there the best decision is probably to emulate little-endianness. On an Xbox, I would guess WebGL performance would be a higher priority than web sites using internal <code class="highlighter-rouge">ArrayBuffer</code>s. But I’m not sure. I’d say this is a decision for big-endian browsers to make, but <strong>I would greatly welcome their input</strong>.</p>
+
+<p>In the meantime, we should do everything we can to make portability more attractive and convenient. For working with I/O, where you need explicit control over endianness, applications can use <a href="https://developer.mozilla.org/en/JavaScript_typed_arrays/DataView">DataView</a>. For heterogeneous data, there’ll be ES6 <a href="http://wiki.ecmascript.org/doku.php?id=harmony:binary_data">structs</a>. Finally, I’d like to add an option for <code class="highlighter-rouge">ArrayBuffer</code>s and typed arrays to be given an optional explicit endianness:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayBuffer</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="s2">"little"</span><span class="p">);</span> <span class="c1">// a little-endian buffer</span>
+<span class="kd">var</span> <span class="nx">a1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint32Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">a2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// must be 1, regardless of system architecture</span>
+</code></pre>
+</div>
+
+<p>With the endianness specified explicitly, you can still easily write portable logic even when casting — without having to canonicalize bytes yourself. <a href="https://github.com/kripken/emscripten">Emscripten</a> and <a href="http://www.mandreel.com/">Mandreel</a> could benefit from this increased portability, for example, and I think crypto algorithms would as well. I’ll propose this extension to Khronos and TC39, and discuss it with JavaScript engine implementors.</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

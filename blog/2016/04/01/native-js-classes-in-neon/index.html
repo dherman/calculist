@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>Native JS Classes in Neon</title>
+  <meta name="description" content="Last weekend I landed a PR that adds support for defining custom native classes in Neon. This means you can create JavaScript objects that internally wrap—and own—a Rust data structure, along with methods that can safely access the internal Rust data. As a quick demonstration, suppose you have an Employee struct defined in Rust: pub struct Employee { id: i32, name: String, // etc ... }">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/blog/2016/04/01/native-js-classes-in-neon/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="The Little Calculist" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta property="og:title" content="Native JS Classes in Neon">
+  <meta property="og:site_name" content="The Little Calculist">
+  <meta property="og:url" content="http://localhost:4000/blog/2016/04/01/native-js-classes-in-neon/">
+  <meta property="og:description" content="Last weekend I landed a PR that adds support for defining custom native classes in Neon. This means you can create JavaScript objects that internally wrap—and own—a Rust data structure, along with methods that can safely access the internal Rust data. As a quick demonstration, suppose you have an Employee struct defined in Rust: pub struct Employee { id: i32, name: String, // etc ... }">
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="littlecalculist">
+  <meta name="twitter:title" content="Native JS Classes in Neon">
+  <meta name="twitter:description" content="Last weekend I landed a PR that adds support for defining custom native classes in Neon. This means you can create JavaScript objects that internally wrap—and own—a Rust data structure, along with ...">
+  
+    <meta name="twitter:creator" content="littlecalculist">
+  
+  
+
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27510188-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">The Little Calculist</a>
+
+    <nav class="site-nav">
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Native JS Classes in Neon</h1>
+    
+    <p class="post-meta"><time datetime="2016-04-01T08:47:09-07:00" itemprop="datePublished">Apr 1, 2016</time> •
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Last weekend I <a href="https://github.com/rustbridge/neon/pull/58">landed a PR</a> that adds support for defining custom native classes in <a href="/blog/2015/12/23/neon-node-rust/">Neon</a>. This means you can create JavaScript objects that internally wrap—and <a href="https://doc.rust-lang.org/book/ownership.html">own</a>—a Rust data structure, along with methods that can safely access the internal Rust data.</p>
+
+<p>As a quick demonstration, suppose you have an <code class="highlighter-rouge">Employee</code> struct defined in Rust:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="k">pub</span> <span class="k">struct</span> <span class="n">Employee</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">:</span> <span class="nb">i32</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="c">// etc ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<!--more-->
+
+<p>You can expose this to JS with the new <code class="highlighter-rouge">declare_types!</code> macro:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="nd">declare_types!</span> <span class="p">{</span>
+
+    <span class="c">/// JS class wrapping Employee records.</span>
+    <span class="k">pub</span> <span class="n">class</span> <span class="n">JsEmployee</span> <span class="k">for</span> <span class="n">Employee</span> <span class="p">{</span>
+
+        <span class="nf">init</span><span class="p">(</span><span class="n">call</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">call</span><span class="py">.scope</span><span class="p">;</span>
+            <span class="k">let</span> <span class="n">id</span> <span class="o">=</span> <span class="nd">try!</span><span class="p">(</span><span class="nd">try!</span><span class="p">(</span><span class="n">call</span><span class="py">.arguments</span><span class="nf">.require</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="py">.check</span><span class="p">::</span><span class="o">&lt;</span><span class="n">JsInteger</span><span class="o">&gt;</span><span class="p">());</span>
+            <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="nd">try!</span><span class="p">(</span><span class="nd">try!</span><span class="p">(</span><span class="n">call</span><span class="py">.arguments</span><span class="nf">.require</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="nf">.to_string</span><span class="p">());</span>
+            <span class="c">// etc ...</span>
+            <span class="nf">Ok</span><span class="p">(</span><span class="n">Employee</span> <span class="p">{</span>
+                <span class="n">id</span><span class="p">:</span> <span class="n">id</span><span class="nf">.value</span><span class="p">()</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span>
+                <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="nf">.value</span><span class="p">(),</span>
+                <span class="c">// etc ...</span>
+            <span class="p">})</span>
+        <span class="p">}</span>
+
+        <span class="n">method</span> <span class="nf">name</span><span class="p">(</span><span class="n">call</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">call</span><span class="py">.scope</span><span class="p">;</span>
+            <span class="k">let</span> <span class="n">this</span><span class="p">:</span> <span class="n">Handle</span><span class="o">&lt;</span><span class="n">JsEmployee</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">call</span><span class="py">.arguments</span><span class="nf">.this</span><span class="p">(</span><span class="n">scope</span><span class="p">);</span>
+            <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="nd">try!</span><span class="p">(</span><span class="nn">vm</span><span class="p">::</span><span class="nf">lock</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="p">|</span><span class="n">employee</span><span class="p">|</span> <span class="p">{</span>
+                <span class="n">employee</span><span class="py">.name</span><span class="nf">.clone</span><span class="p">()</span>
+            <span class="p">});</span>
+            <span class="nf">Ok</span><span class="p">(</span><span class="nd">try!</span><span class="p">(</span><span class="nn">JsString</span><span class="p">::</span><span class="nf">new_or_throw</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">[</span>..<span class="p">]))</span><span class="nf">.upcast</span><span class="p">())</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>This defines a custom JS class whose instances contain an <code class="highlighter-rouge">Employee</code> record. It binds <code class="highlighter-rouge">JsEmployee</code> to a Rust type that can create the class at runtime (i.e., the constructor function and prototype object). The <code class="highlighter-rouge">init</code> function defines the behavior for allocating the internals during construction of a new instance. The <code class="highlighter-rouge">name</code> method shows an example of how you can use <code class="highlighter-rouge">vm::lock</code> to borrow a reference to the internal Rust data of an instance.</p>
+
+<p>From there, you can extract the constructor function and expose it to JS, for example by exporting it from a native module:</p>
+
+<div class="language-rust highlighter-rouge"><pre class="highlight"><code><span class="nd">register_module!</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">m</span><span class="py">.scope</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">class</span> <span class="o">=</span> <span class="nd">try!</span><span class="p">(</span><span class="nn">JsEmployee</span><span class="p">::</span><span class="nf">class</span><span class="p">(</span><span class="n">scope</span><span class="p">));</span>       <span class="c">// get the class</span>
+    <span class="k">let</span> <span class="n">constructor</span> <span class="o">=</span> <span class="nd">try!</span><span class="p">(</span><span class="n">class</span><span class="nf">.constructor</span><span class="p">(</span><span class="n">scope</span><span class="p">));</span> <span class="c">// get the constructor</span>
+    <span class="nd">try!</span><span class="p">(</span><span class="n">m</span><span class="py">.exports</span><span class="nf">.set</span><span class="p">(</span><span class="s">"Employee"</span><span class="p">,</span> <span class="n">constructor</span><span class="p">));</span>     <span class="c">// export the constructor</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Then you can use instances of this type in JS just like any other object:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Employee</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./native'</span><span class="p">).</span><span class="nx">Employee</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">lumbergh</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Employee</span><span class="p">(</span><span class="mi">9001</span><span class="p">,</span> <span class="s2">"Bill Lumbergh"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lumbergh</span><span class="p">.</span><span class="nx">name</span><span class="p">());</span> <span class="c1">// Bill Lumbergh</span>
+</code></pre>
+</div>
+
+<p>Since the methods on <code class="highlighter-rouge">Employee</code> expect <code class="highlighter-rouge">this</code> to have the right binary layout, they check to make sure that they aren’t being called on an inappropriate object type. This means you can’t segfault Node by doing something like:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Employee</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">call</span><span class="p">({});</span>
+</code></pre>
+</div>
+
+<p>This safely throws a TypeError exception just like methods from other native classes like <code class="highlighter-rouge">Date</code> or <code class="highlighter-rouge">Buffer</code> do.</p>
+
+<p>Anyway, that’s a little taste of user-defined native classes. More docs work to do!</p>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; David Herman - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="http://localhost:4000/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
